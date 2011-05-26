@@ -1,0 +1,12 @@
+Array.wrap
+Array.range
+Array.prototype.detect
+Array.prototype.uniq
+
+Object.values
+
+Function.prototype.throttle
+Function.prototype.debounce
+Function.prototype.curry
+
+Number.prototype.times
