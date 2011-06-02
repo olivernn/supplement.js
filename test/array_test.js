@@ -81,3 +81,26 @@ test("detect can set the context of the callback function", function () {
 
   same(self, context, "should be able to set the context of the function")
 })
+
+test("toArray converts an array like object to an array", function () {
+  var args, argsArr
+  var fn = function () {
+    console.log(arguments)
+    args = arguments
+    argsArr = Array.toArray(arguments)
+  }
+
+  fn(1,2,3)
+
+  equal(args.length, argsArr.length, "array should have the same length as the arguments")
+  equal(args[0], argsArr[0], "array elements should be the same as the arguments")
+  ok(Array.isArray(argsArr))
+})
+
+test("toArray converts a string to an array of characters", function () {
+  var arr = Array.toArray("foo")
+
+  ok(Array.isArray(arr), "should return an instance of an array")
+  equal(3, arr.length, "should have an element for each character")
+  equal("f", arr[0])
+})

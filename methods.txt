@@ -1,12 +1,15 @@
 Array.wrap
 Array.range
+Array.toArray
 Array.prototype.detect
 Array.prototype.uniq
 
 Object.values
+Object.provide
 
 Function.prototype.throttle
 Function.prototype.debounce
 Function.prototype.curry
+Function.prototype.singleUse
 
 Number.prototype.times

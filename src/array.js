@@ -60,3 +60,14 @@
     return out
   }
 })();
+
+/**
+ * ## Array.toArray
+ */
+(function () {
+  if (Array.toArray) return
+
+  Array.toArray = function (args) {
+    return Array.prototype.slice.call(args, 0)
+  }
+})();
