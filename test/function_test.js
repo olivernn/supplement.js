@@ -59,7 +59,7 @@ test("throttle make sure a function is only called at minimum intervals", functi
     throttledFn()
     start()
     equal(2, counter, "should throttle the function so that it is only called every 100ms")
-  }, 75)
+  }, 100)
 })
 
 test("debounce returns a function that is only executed after it has stopped being called for x ms", function () {
