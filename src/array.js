@@ -50,5 +50,6 @@ supplement.defineMethod(Array.prototype, 'detect',  function (lambda, context) {
  * ## Array.toArray
  */
 supplement.defineMethod(Array, 'toArray',  function (args) {
+  if (typeof args === "string") throw new TypeError('Array.toArray called on non-arguments');
   return Array.prototype.slice.call(args, 0)
 })

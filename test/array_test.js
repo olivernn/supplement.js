@@ -85,7 +85,6 @@ test("detect can set the context of the callback function", function () {
 test("toArray converts an array like object to an array", function () {
   var args, argsArr
   var fn = function () {
-    console.log(arguments)
     args = arguments
     argsArr = Array.toArray(arguments)
   }
@@ -97,10 +96,9 @@ test("toArray converts an array like object to an array", function () {
   ok(Array.isArray(argsArr))
 })
 
+// this doesn't work in IE throw the error if non array?
 test("toArray converts a string to an array of characters", function () {
-  var arr = Array.toArray("foo")
-
-  ok(Array.isArray(arr), "should return an instance of an array")
-  equal(3, arr.length, "should have an element for each character")
-  equal("f", arr[0])
+  raises(function () {
+    Array.toArray("foo")
+  }, TypeError, "raises type error if passed a string")
 })
