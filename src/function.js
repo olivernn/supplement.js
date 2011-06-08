@@ -5,7 +5,7 @@
  *
  * @returns {Function} a function with the same behaviour that can only be called once.
  */
-supplement.defineMethod(Function.prototype, 'singleUse', function () {
+supplement.defineMethod(Function.prototype, 'singleUse', function () { "use strict";
   var fn = this
   var alreadyCalled = false
 
@@ -30,7 +30,7 @@ supplement.defineMethod(Function.prototype, 'singleUse', function () {
  *     add(5, 10) === addFive(10)
  *
  */
-supplement.defineMethod(Function.prototype, 'curry', function () {
+supplement.defineMethod(Function.prototype, 'curry', function () { "use strict";
   var args = Array.prototype.slice.call(arguments, 0)
   var fn = this
 
@@ -49,7 +49,7 @@ supplement.defineMethod(Function.prototype, 'curry', function () {
  * @params {Number} the rate limit in miliseconds for the minimum pause between executions of the function
  * @returns {Function} the throttled function.
  */
-supplement.defineMethod(Function.prototype, 'throttle', function (rate) {
+supplement.defineMethod(Function.prototype, 'throttle', function (rate) { "use strict";
   var fn = this
   var callTime, lastCallTime
 
@@ -77,7 +77,7 @@ supplement.defineMethod(Function.prototype, 'throttle', function (rate) {
  *     // keyupHandler will only be called 100 miliseconds after the keyup event stops being fired.
  *
  */
-supplement.defineMethod(Function.prototype, 'debounce', function (time) {
+supplement.defineMethod(Function.prototype, 'debounce', function (time) { "use strict";
   var fn = this
   var timeout
 

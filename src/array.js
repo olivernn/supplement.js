@@ -20,7 +20,7 @@
  *     Array.wrap([1,2,3])    // returns [1,2,3]
  *     Array.wrap(undefined)  // returns []
  */
-supplement.defineMethod(Array, 'wrap',  function (obj) {
+supplement.defineMethod(Array, 'wrap',  function (obj) { "use strict";
    if (obj == null || obj == undefined) return []
    if (Array.isArray(obj)) return obj
    return [obj]
@@ -35,7 +35,7 @@ supplement.defineMethod(Array, 'wrap',  function (obj) {
  * ### Example
  *      [1,1,2,3,4,4].uniq()  // returns [1,2,3,4]
  */
-supplement.defineMethod(Array.prototype, 'uniq',  function () {
+supplement.defineMethod(Array.prototype, 'uniq',  function () { "use strict";
   var length = this.length
   var out = []
   for (var i=0; i < length; i++) {
@@ -56,7 +56,7 @@ supplement.defineMethod(Array.prototype, 'uniq',  function () {
  * ### Example
  *     Array.range(4,2)    // returns [4,5,6,7]
  */
-supplement.defineMethod(Array, 'range',  function (start, end) {
+supplement.defineMethod(Array, 'range',  function (start, end) { "use strict";
   if (!start || !end) throw new TypeError ('Array.range called with no range start or end')
   var a = []
   for (var i=start; i <= end; i++) {
@@ -83,7 +83,7 @@ supplement.defineMethod(Array, 'range',  function (start, end) {
  *       return (num == 3)
  *     })  // returns 3
  */
-supplement.defineMethod(Array.prototype, 'detect',  function (fn, context) {
+supplement.defineMethod(Array.prototype, 'detect',  function (fn, context) { "use strict";
   var length = this.length
   var out = null
 
@@ -109,7 +109,7 @@ supplement.defineMethod(Array.prototype, 'detect',  function (fn, context) {
  *      var args = Array.toArray(arguments)
  *    }
  */
-supplement.defineMethod(Array, 'toArray',  function (args) {
+supplement.defineMethod(Array, 'toArray',  function (args) { "use strict";
   if (typeof args === "string") throw new TypeError('Array.toArray called on non-arguments');
   return Array.prototype.slice.call(args, 0)
 })

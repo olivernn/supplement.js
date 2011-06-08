@@ -11,7 +11,7 @@
  *    Object.values({foo: "bar"})
  *    // returns ["foo"]
  */
-supplement.defineMethod(Object, 'values', function (obj) {
+supplement.defineMethod(Object, 'values', function (obj) { "use strict";
   if (obj !== Object(obj)) throw new TypeError('Object.values called on non-object');
   return Object.keys(obj).map(function (key) { return obj[key] })
 });
@@ -31,7 +31,7 @@ supplement.defineMethod(Object, 'values', function (obj) {
  *    Object.provide(a, 'foo', 'bar', 'baz)
  *    // returns {} which is equal to a.foo.bar.baz
  */
-supplement.defineMethod(Object, 'provide', function (obj) {
+supplement.defineMethod(Object, 'provide', function (obj) { "use strict";
   if (obj !== Object(obj)) throw new TypeError('Object.provide called on non-object');
   var properties = Array.prototype.slice.call(arguments, 1)
   var node = obj
