@@ -24,6 +24,16 @@ test("range returns an array with all numbers between the start and end", functi
   same(Array.range(1, 5), [1,2,3,4,5], "should return an array with start and end as specified")
 })
 
+test("range throw TypeError if start or end are missing", function () {
+  raises(function () {
+    Array.range(1)
+  }, TypeError, "Need both start and end params")
+
+  raises(function () {
+    Array.range()
+  }, TypeError, "Need both start and end params")
+})
+
 test("uniq returns an array with all duplicates removed", function () {
   var arr = [1,1,1,2,2,3]
 

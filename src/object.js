@@ -1,5 +1,15 @@
 /**
- * Object.values
+ * ## Object.values
+ * Returns all the enumeralbe values of an object.  Will not return any values from higher up the prototype
+ * chain.
+ *
+ * @param {Object} the object whose values you want
+ * @returns {Array} an array of this objects values
+ * @throws {TypeError} when passed a non plain object
+ *
+ * ### Example
+ *    Object.values({foo: "bar"})
+ *    // returns ["foo"]
  */
 supplement.defineMethod(Object, 'values', function (obj) {
   if (obj !== Object(obj)) throw new TypeError('Object.values called on non-object');
@@ -7,7 +17,19 @@ supplement.defineMethod(Object, 'values', function (obj) {
 });
 
 /**
- * Object.values
+ * Object.provide
+ * Returns a property of an object which is nested arbitrarily deep within another object.  If at any point
+ * along the chain of properties it finds a property that doesn't exist it populates that property with a 
+ * blank object and continues.
+ *
+ * @param {Object} the object for which you wish to navigate through
+ * @params {String} any number of properties which will be nested within each other in the object
+ * @returns {Object} the object at the end of the nested properties
+ *
+ * ### Example
+ *    var a = {}
+ *    Object.provide(a, 'foo', 'bar', 'baz)
+ *    // returns {} which is equal to a.foo.bar.baz
  */
 supplement.defineMethod(Object, 'provide', function (obj) {
   if (obj !== Object(obj)) throw new TypeError('Object.provide called on non-object');

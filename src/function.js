@@ -1,5 +1,9 @@
 /**
  * ## Function.prototype.singleUse
+ * Returns a version of the function that can only be called once, after which the function will behave
+ * as a no-op.
+ *
+ * @returns {Function} a function with the same behaviour that can only be called once.
  */
 supplement.defineMethod(Function.prototype, 'singleUse', function () {
   var fn = this
@@ -15,6 +19,16 @@ supplement.defineMethod(Function.prototype, 'singleUse', function () {
 
 /**
  * ## Function.prototype.curry
+ * Returns a copy of the function with one or more arguments already set.
+ *
+ * @params {Object} any number of arguments to prefil the original funciton with.
+ * @returns {Function}
+ *
+ * ### Example
+ *     var add = function (a, b) { return a + b }
+ *     var addFive = add.curry(5)
+ *     add(5, 10) === addFive(10)
+ *
  */
 supplement.defineMethod(Function.prototype, 'curry', function () {
   var args = Array.prototype.slice.call(arguments, 0)
@@ -28,6 +42,12 @@ supplement.defineMethod(Function.prototype, 'curry', function () {
 
 /**
  * ## Function.prototype.throttle
+ * Returns a copy of the function with the same behaviour but which will only execute once every x amount
+ * of miliseconds.  This can be useful when reducing the load on a funciton that could be triggered many
+ * times, perhaps as a result of a keyup event.
+ *
+ * @params {Number} the rate limit in miliseconds for the minimum pause between executions of the function
+ * @returns {Function} the throttled function.
  */
 supplement.defineMethod(Function.prototype, 'throttle', function (rate) {
   var fn = this
@@ -45,6 +65,17 @@ supplement.defineMethod(Function.prototype, 'throttle', function (rate) {
 
 /**
  * ## Function.prototype.debounce
+ * Returns a copy of the funciton that will only execute after it has stopped being called for x miliseconds.
+ * This can be useful for functions used as keyup handlers where the action should only happen once the user
+ * has stopped typing.
+ *
+ * @params {Number} the time in miliseconds between calling the funciton and the function executing.
+ *
+ * ### Example
+ *     var keyupHandler = function () { // awesome code goes here! }
+ *     input.addEventListener('keyup', keyupHandler.debounce(100))
+ *     // keyupHandler will only be called 100 miliseconds after the keyup event stops being fired.
+ *
  */
 supplement.defineMethod(Function.prototype, 'debounce', function (time) {
   var fn = this
