@@ -36,12 +36,10 @@ supplement.defineMethod(Array, 'wrap',  function (obj) { "use strict";
  *      [1,1,2,3,4,4].uniq()  // returns [1,2,3,4]
  */
 supplement.defineMethod(Array.prototype, 'uniq',  function () { "use strict";
-  var length = this.length
-  var out = []
-  for (var i=0; i < length; i++) {
-   if (out.indexOf(this[i]) === -1) out.push(this[i])
-  };
-  return out
+  return this.reduce(function (out, elem) {
+    if (out.indexOf(elem) === -1) out.push(elem)
+    return out
+  }, [])
 });
 
 /**
