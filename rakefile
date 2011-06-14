@@ -7,3 +7,8 @@ desc 'Create bundled and minified source files.'
 task :bundle do
   Bundler.bundle!
 end
+
+desc 'Generate the documentation for the core library'
+task :docs do
+  exec "dox --title 'Supplement' src/*.js > docs/index.html"
+end
