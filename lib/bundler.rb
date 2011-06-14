@@ -28,14 +28,16 @@ class Bundler
     private
       def files
         @files ||= %w(
-          array
-          number
-          object
+          supplement.js
+          array.js
+          function.js
+          number.js
+          object.js
         )
       end
 
       def header
-        @header ||= File.read(File.join(SRC_DIR, 'header.js'))
+        @header ||= File.read(File.join('./lib', 'header.js'))
       end
 
       def version
