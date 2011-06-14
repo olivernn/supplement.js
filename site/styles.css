@@ -1,0 +1,110 @@
+/*
+  colour-top: 93FF61
+*/
+
+body {
+  font-family: helvetica;
+  padding: 0px;
+  margin: 0px;
+  min-width: 960px;
+}
+
+h1 {
+  font-size: 5em;
+  font-weight: bolder;
+  color: #f5f5f5;
+  margin: 10px;
+  text-shadow: 0px 0px 2px #364F38;
+}
+
+h1 span {
+  font-size: 0.6em;
+}
+
+h2 {
+  font-size: 3em;
+  margin: 10px;
+  text-shadow: 0px 0px 1px #222;
+}
+
+p {
+  margin:0px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 2em;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  display: block;
+  padding: 0px;
+  margin: 0px;
+}
+
+ul p {
+  font-size: 1.4em;
+}
+
+ul li {
+  list-style: none;
+}
+
+article header {
+  float:left;
+  width: 45%;
+  padding: 20px;
+  margin: 0px;
+  text-align: right;
+}
+
+article section {
+  float:right;
+  width: 45%;
+  padding: 20px;
+  margin: 0px;
+}
+
+article {
+  width: 100%;
+  overflow: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border:none;
+}
+
+footer {
+  padding: 10px;
+  background-color: black;
+}
+
+footer ul {
+  padding-left: 40px;
+}
+
+footer li {
+  padding-right: 20px;
+  display: inline;
+}
+
+.intro {
+  background-color: #00DE7E;
+/*  background-color: #75E245;*/
+}
+
+.usage {
+  background-color: #00AF63;
+/*  background-color: #61DA55;*/
+}
+
+.methods {
+  background-color: #00884E;
+/*  background-color: #46D959;*/
+}
