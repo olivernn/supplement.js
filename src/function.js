@@ -72,9 +72,13 @@ supplement.defineMethod(Function.prototype, 'throttle', function (rate) { "use s
  * @params {Number} the time in miliseconds between calling the funciton and the function executing.
  *
  * ### Example
- *     var keyupHandler = function () { // awesome code goes here! }
+ *     var keyupHandler = function () {
+ *       // awesome code goes here!
+ *     }
+ *     
  *     input.addEventListener('keyup', keyupHandler.debounce(100))
- *     // keyupHandler will only be called 100 miliseconds after the keyup event stops being fired.
+ *     // keyupHandler will only be called 100 miliseconds after
+ *     // the keyup event stops being fired.
  *
  */
 supplement.defineMethod(Function.prototype, 'debounce', function (time) { "use strict";

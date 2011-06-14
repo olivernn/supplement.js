@@ -8,8 +8,8 @@
  * @throws {TypeError} when passed a non plain object
  *
  * ### Example
- *    Object.values({foo: "bar"})
- *    // returns ["foo"]
+ *     Object.values({foo: "bar"})
+ *     // returns ["foo"]
  */
 supplement.defineMethod(Object, 'values', function (obj) { "use strict";
   if (obj !== Object(obj)) throw new TypeError('Object.values called on non-object');
@@ -27,9 +27,9 @@ supplement.defineMethod(Object, 'values', function (obj) { "use strict";
  * @returns {Object} the object at the end of the nested properties
  *
  * ### Example
- *    var a = {}
- *    Object.provide(a, 'foo', 'bar', 'baz)
- *    // returns {} which is equal to a.foo.bar.baz
+ *     var a = {}
+ *     Object.provide(a, 'foo', 'bar', 'baz)
+ *     // returns {} which is equal to a.foo.bar.baz
  */
 supplement.defineMethod(Object, 'provide', function (obj) { "use strict";
   if (obj !== Object(obj)) throw new TypeError('Object.provide called on non-object');

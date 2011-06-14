@@ -6,7 +6,7 @@
 
 /**
  * ## Array.wrap
- * Wraps the parameter in an array, ensures that the return value is always an array.  Usefuly when combined
+ * Wraps the parameter in an array, ensures that the return value is always an array.  Useful when combined
  * with array enumerators to prevent accidently calling methods on null or undefined.
  *
  * When passed null or undefined an empty array is returned.  When passed an array that array is returned
@@ -103,9 +103,9 @@ supplement.defineMethod(Array.prototype, 'detect',  function (fn, context) { "us
  * @throws {TypeError} when passed a string.
  *
  * ### Example
- *    function () {
- *      var args = Array.toArray(arguments)
- *    }
+ *     function () {
+ *       var args = Array.toArray(arguments)
+ *     }
  */
 supplement.defineMethod(Array, 'toArray',  function (args) { "use strict";
   if (typeof args === "string") throw new TypeError('Array.toArray called on non-arguments');

@@ -1,3 +1,7 @@
+/**
+ * Namespace
+ * @private
+ */
 supplement = {
   /**
    * ## supplement.defineMethod
@@ -11,7 +15,9 @@ supplement = {
    * @param {Function} the function that makes up the body of the method for the object.
    *
    * ### Example
-   *    supplement.defineMethod(Array, 'first', function () { return this[0] })
+   *     supplement.defineMethod(Array, 'first', function () {
+   *       return this[0]
+   *     })
    */
   defineMethod: function (obj, name, fn) {
     if (obj[name]) return
@@ -23,7 +29,7 @@ supplement = {
           enumerable: false,
           configurable: false
         })
-      } catch (e) { /* catch for IE8's broken defineProperty implementation */ }
+      } catch (e) { } // catch for IE8's broken defineProperty implementation
     }
 
     if (!obj[name]) {

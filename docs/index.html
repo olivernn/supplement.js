@@ -112,7 +112,7 @@ code .this { color: #19469D; }</style>
 <td class="docs">
 <h2>Array.wrap</h2>
 
-<p>Wraps the parameter in an array, ensures that the return value is always an array.  Usefuly when combined
+<p>Wraps the parameter in an array, ensures that the return value is always an array.  Useful when combined
 with array enumerators to prevent accidently calling methods on null or undefined.</p>
 
 <p>When passed null or undefined an empty array is returned.  When passed an array that array is returned
@@ -240,10 +240,11 @@ will be called with its context set to the optional context param.</p>
 
 <h3>Example</h3>
 
-<p>   function () {
-     var args = Array.toArray(arguments)
-   }
- </p>
+<pre><code>function () {
+  var args = Array.toArray(arguments)
+}</code></pre>
+
+<p> </p>
 </td>
 <td class="code">
 <pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>, <span class="string">'toArray'</span>,  <span class="keyword">function</span> (<span class="variable">args</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
@@ -349,9 +350,13 @@ has stopped typing.</p>
 
 <h3>Example</h3>
 
-<pre><code>var keyupHandler = function () { // awesome code goes here! }
+<pre><code>var keyupHandler = function () {
+  // awesome code goes here!
+}
+
 input.addEventListener('keyup', keyupHandler.debounce(100))
-// keyupHandler will only be called 100 miliseconds after the keyup event stops being fired.</code></pre>
+// keyupHandler will only be called 100 miliseconds after
+// the keyup event stops being fired.</code></pre>
 
 <p> </p>
 </td>
@@ -382,9 +387,10 @@ will be yielded the index of the iteration each time it is called.</p>
 
 <h3>Example</h3>
 
-<p>   (5).times(function (i) { console.log(i) })
-   // prints 0 1 2 3 4
- </p>
+<pre><code>(5).times(function (i) { console.log(i) })
+// prints 0 1 2 3 4</code></pre>
+
+<p> </p>
 </td>
 <td class="code">
 <pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'times'</span>, <span class="keyword">function</span> (<span class="variable">fn</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
@@ -392,6 +398,47 @@ will be yielded the index of the iteration each time it is called.</p>
     <span class="variable">fn</span>(<span class="variable">i</span>)
   };
 })</code></pre>
+</td>
+</tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
+<td class="docs">
+<h2>supplement.defineMethod</h2>
+
+<p>A utility function for supplementing any object with new methods.  It wraps the ES5 Object.defineProperty
+method and uses that wherever possible, falling back to plain property assignment in older browsers.</p>
+
+<p>The function will have <code>this</code> set to the object passed as the first parameter.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>param</strong>: <em>Object</em>  the object on which to define the method</p></li><li><p><strong>param</strong>: <em>String</em>  the name of the new method</p></li><li><p><strong>param</strong>: <em>Function</em>  the function that makes up the body of the method for the object.</p></li></ul>
+
+<h3>Example</h3>
+
+<pre><code>supplement.defineMethod(Array, 'first', function () {
+  return this[0]
+})</code></pre>
+
+<p>   </p>
+</td>
+<td class="code">
+<pre><code><span class="variable">defineMethod</span>: <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>) {
+    <span class="keyword">if</span> (<span class="variable">obj</span>[<span class="variable">name</span>]) <span class="keyword">return</span>
+
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="class">Object</span>.<span class="variable">defineProperty</span> == <span class="string">'function'</span>) {
+      <span class="keyword">try</span> {
+        <span class="class">Object</span>.<span class="variable">defineProperty</span>(<span class="variable">obj</span>, <span class="variable">name</span>, {
+          <span class="variable">value</span>: <span class="variable">fn</span>,
+          <span class="variable">enumerable</span>: <span class="variable">false</span>,
+          <span class="variable">configurable</span>: <span class="variable">false</span>
+        })
+      } <span class="keyword">catch</span> (<span class="variable">e</span>) { } <span class="comment">// catch for IE8's broken defineProperty implementation</span>
+    }
+
+    <span class="keyword">if</span> (!<span class="variable">obj</span>[<span class="variable">name</span>]) {
+      <span class="variable">obj</span>[<span class="variable">name</span>] = <span class="variable">fn</span>
+    };
+  }
+}</code></pre>
 </td>
 </tr><tr class="filename"><td><h2 id="src/object.js"><a href="#">object</a></h2></td><td>src/object.js</td></tr><tr class="code">
 <td class="docs">
@@ -406,9 +453,10 @@ chain.</p>
 
 <h3>Example</h3>
 
-<p>   Object.values({foo: "bar"})
-   // returns ["foo"]
- </p>
+<pre><code>Object.values({foo: "bar"})
+// returns ["foo"]</code></pre>
+
+<p> </p>
 </td>
 <td class="code">
 <pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Object</span>, <span class="string">'values'</span>, <span class="keyword">function</span> (<span class="variable">obj</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
@@ -430,10 +478,11 @@ blank object and continues.</p>
 
 <h3>Example</h3>
 
-<p>   var a = {}
-   Object.provide(a, 'foo', 'bar', 'baz)
-   // returns {} which is equal to a.foo.bar.baz
- </p>
+<pre><code>var a = {}
+Object.provide(a, 'foo', 'bar', 'baz)
+// returns {} which is equal to a.foo.bar.baz</code></pre>
+
+<p> </p>
 </td>
 <td class="code">
 <pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Object</span>, <span class="string">'provide'</span>, <span class="keyword">function</span> (<span class="variable">obj</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
@@ -450,60 +499,6 @@ blank object and continues.</p>
   })
   <span class="keyword">return</span> <span class="variable">node</span>
 });</code></pre>
-</td>
-</tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
-<td class="docs">
-<p>supplement = {</p>
-</td>
-<td class="code">
-<pre><code>*
-   * ## <span class="variable">supplement</span>.<span class="variable">defineMethod</span>
-   * <span class="class">A</span> <span class="variable">utility</span> <span class="keyword">function</span> <span class="keyword">for</span> <span class="variable">supplementing</span> <span class="variable">any</span> <span class="variable">object</span> <span class="keyword">with</span> <span class="keyword">new</span> <span class="variable">methods</span>.  <span class="class">It</span> <span class="variable">wraps</span> <span class="variable">the</span> <span class="class">ES5</span> <span class="class">Object</span>.<span class="variable">defineProperty</span>
-   * <span class="variable">method</span> <span class="variable">and</span> <span class="variable">uses</span> <span class="variable">that</span> <span class="variable">wherever</span> <span class="variable">possible</span>, <span class="variable">falling</span> <span class="variable">back</span> <span class="variable">to</span> <span class="variable">plain</span> <span class="variable">property</span> <span class="variable">assignment</span> <span class="keyword">in</span> <span class="variable">older</span> <span class="variable">browsers</span>.
-   *
-   * <span class="class">The</span> <span class="keyword">function</span> <span class="variable">will</span> <span class="variable">have</span> `<span class="this">this</span>` <span class="variable">set</span> <span class="variable">to</span> <span class="variable">the</span> <span class="variable">object</span> <span class="variable">passed</span> <span class="variable">as</span> <span class="variable">the</span> <span class="variable">first</span> <span class="variable">parameter</span>.
-   *
-   * @<span class="variable">param</span> {<span class="class">Object</span>} <span class="variable">the</span> <span class="variable">object</span> <span class="variable">on</span> <span class="variable">which</span> <span class="variable">to</span> <span class="variable">define</span> <span class="variable">the</span> <span class="variable">method</span>
-   * @<span class="variable">param</span> {<span class="class">String</span>} <span class="variable">the</span> <span class="variable">name</span> <span class="variable">of</span> <span class="variable">the</span> <span class="keyword">new</span> <span class="variable">method</span>
-   * @<span class="variable">param</span> {<span class="class">Function</span>} <span class="variable">the</span> <span class="keyword">function</span> <span class="variable">that</span> <span class="variable">makes</span> <span class="variable">up</span> <span class="variable">the</span> <span class="variable">body</span> <span class="variable">of</span> <span class="variable">the</span> <span class="variable">method</span> <span class="keyword">for</span> <span class="variable">the</span> <span class="variable">object</span>.
-   *
-   * ### <span class="class">Example</span>
-   *    <span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>, <span class="string">'first'</span>, <span class="keyword">function</span> () { <span class="keyword">return</span> <span class="this">this</span>[<span class="number integer">0</span>] })
-   </code></pre>
-</td>
-</tr>
-<tr class="code">
-<td class="docs">
-<p>defineMethod: function (obj, name, fn) {
-    if (obj[name]) return</p>
-
-<pre><code>if (typeof Object.defineProperty == 'function') {
-  try {
-    Object.defineProperty(obj, name, {
-      value: fn,
-      enumerable: false,
-      configurable: false
-    })
-  } catch (e) {</code></pre>
-</td>
-<td class="code">
-<pre><code> <span class="keyword">catch</span> <span class="keyword">for</span> <span class="class">IE8</span>'<span class="variable">s</span> <span class="variable">broken</span> <span class="variable">defineProperty</span> <span class="variable">implementation</span> </code></pre>
-</td>
-</tr>
-<tr class="code">
-<td class="docs">
-<p>}
-    }</p>
-
-<pre><code>if (!obj[name]) {
-  obj[name] = fn
-};</code></pre>
-
-<p>  }
-}</p>
-</td>
-<td class="code">
-
 </td>
 </tr>	</body>
 </html></tbody></table>

@@ -6,8 +6,8 @@
  * @param {Function} the function to be called each time.
  *
  * ### Example
- *    (5).times(function (i) { console.log(i) })
- *    // prints 0 1 2 3 4
+ *     (5).times(function (i) { console.log(i) })
+ *     // prints 0 1 2 3 4
  */
 supplement.defineMethod(Number.prototype, 'times', function (fn) { "use strict";
   for (var i=0; i < this; i++) {
