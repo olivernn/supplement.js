@@ -3,6 +3,7 @@ Array.range
 Array.toArray
 Array.prototype.detect
 Array.prototype.uniq
+Array.prototype.uniqBy
 
 Object.values
 Object.provide
@@ -13,3 +14,17 @@ Function.prototype.curry
 Function.prototype.singleUse
 
 Number.prototype.times
+
+// More
+Array.prototype.drop                  // drop the first x elements from the array
+Array.prototype.forEachSlice        // iterates the given slice fn for each slice of the array
+Array.prototype.partition         // returns two arrays, first for which the fn returns true, second for where the fn returns false
+Array.prototype.reject          // reject the any element for which the fn returns true
+Array.prototype.take          // take the first x elements from the array
+Array.prototype.empty       // empty the array
+Array.prototype.compact   // remove any undefined or null elements from the array
+Array.prototype.shuffle // shuffle the contents of an array
+
+// Date
+Date.prototype.beginningOfDay
+Date.prototype.endOfDay
