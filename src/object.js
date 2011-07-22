@@ -28,7 +28,7 @@ supplement.defineMethod(Object, 'values', function (obj) { "use strict";
  *
  * ### Example
  *     var a = {}
- *     Object.provide(a, 'foo', 'bar', 'baz)
+ *     Object.provide(a, 'foo', 'bar', 'baz')
  *     // returns {} which is equal to a.foo.bar.baz
  */
 supplement.defineMethod(Object, 'provide', function (obj) { "use strict";
