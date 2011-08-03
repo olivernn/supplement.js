@@ -111,3 +111,65 @@ supplement.defineMethod(Array, 'toArray',  function (args) { "use strict";
   if (typeof args === "string") throw new TypeError('Array.toArray called on non-arguments');
   return Array.prototype.slice.call(args, 0)
 })
+
+/**
+ * ## Array.prototype.head
+ */
+supplement.defineMethod(Array.prototype, 'head', function () { "use strict";
+  return this[0]
+})
+
+/**
+ * ## Array.prototype.tail
+ */
+supplement.defineMethod(Array.prototype, 'tail', function () { "use strict";
+  return this.slice(1)
+})
+
+/**
+ * ## Array.prototype.compact
+ */
+supplement.defineMethod(Array.prototype, 'compact', function () { "use strict";
+  return this.filter(function (element) { return element })
+})
+
+/**
+ * ## Array.prototype.group
+ */
+supplement.defineMethod(Array.prototype, 'group', function (fn, context) { "use strict";
+  if (typeof fn !== "function") throw new TypeError ()
+
+  return this.reduce(function (grouped, elem, index, arr) {
+    var key = fn.call(context, elem, index, arr)
+    if (!grouped[key]) grouped[key] = []
+    grouped[key].push(elem)
+    return grouped
+  }, {})
+})
+
+/**
+ * ## Array.prototype.reject
+ */
+supplement.defineMethod(Array.prototype, 'reject', function (fn, context) { "use strict";
+  if (typeof fn !== "function") throw new TypeError ()
+
+  return this.reduce(function (keepers, elem, index, arr) {
+    if (!fn.call(context, elem, index, arr)) keepers.push(elem)
+    return keepers
+  }, [])
+})
+
+/**
+ * ## Array.prototype.take
+ */
+supplement.defineMethod(Array.prototype, 'take', function (n) { "use strict";
+  if (!n) throw new TypeError ()
+
+  return this.slice(0, n)
+})
+
+supplement.defineMethod(Array.prototype, 'drop', function (n) { "use strict";
+  if (!n) throw new TypeError ()
+
+  return this.slice(n)
+})
