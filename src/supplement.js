@@ -3,6 +3,11 @@
  * @private
  */
 supplement = {
+
+  defineAlias: function (obj, alias, original) {
+    this.defineMethod(obj, alias, obj[original])
+  },
+
   /**
    * ## supplement.defineMethod
    * A utility function for supplementing any object with new methods.  It wraps the ES5 Object.defineProperty
@@ -22,17 +27,16 @@ supplement = {
   defineMethod: function (obj, name, fn) {
     if (obj[name]) return
 
-    if (typeof Object.defineProperty == 'function') {
-      try {
-        Object.defineProperty(obj, name, {
-          value: fn,
-          enumerable: false,
-          configurable: false
-        })
-      } catch (e) { } // catch for IE8's broken defineProperty implementation
-    }
-
-    if (!obj[name]) {
+    // if defineProperties is supported then a working version
+    // of defineProperty will be available.  Work around for IE8's
+    // broken implementation of defineProperty.
+    if (typeof Object.defineProperties == 'function') {
+      Object.defineProperty(obj, name, {
+        value: fn,
+        enumerable: false,
+        configurable: false
+      })
+    } else {
       obj[name] = fn
     };
   }
