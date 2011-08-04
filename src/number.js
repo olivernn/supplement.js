@@ -18,6 +18,7 @@ supplement.defineMethod(Number.prototype, 'times', function (fn) { "use strict";
 /**
  * ## Number.prototype.seconds
  * Returns the number of seconds converted to milliseconds.
+ *
  * @see Number.prototype.second
  * @returns {Number}
  */
@@ -29,6 +30,7 @@ supplement.defineAlias(Number.prototype, 'second', 'seconds')
 /**
  * ## Number.prototype.minutes
  * Returns the number of minutes converted to milliseconds
+ *
  * @see Number.prototype.minute
  * @returns {Number}
  */
@@ -40,6 +42,7 @@ supplement.defineAlias(Number.prototype, 'minute', 'minutes')
 /**
  * ## Number.prototype.hours
  * Returns the number of hours converted to milliseconds
+ *
  * @see Number.prototype.hour
  * @returns {Number}
  */
@@ -51,6 +54,7 @@ supplement.defineAlias(Number.prototype, 'hour', 'hours')
 /**
  * ## Number.prototype.pad
  * Returns a string representation of the number with n zeroes padding the number.
+ *
  * @params {Number} the number of zeroes to pad the number with
  * @returns {String}
  */

@@ -15,8 +15,8 @@ supplement = (function () {
   /**
    * ## supplement.onClash
    * A callback that will be called when supplement attempts to define a method that would cause a clash.
-   * The callback function will be passed the object that was trying to be modified by supplement and the
-   * property name that was trying to be set.
+   * The callback function will be passed the object that was trying to be modified by supplement, the
+   * property name that was trying to be set and the value that the property was being set to.
    *
    * Use this to decide whether a clash is fatal for your application and throw a big error if so.
    *

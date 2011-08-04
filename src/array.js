@@ -52,7 +52,7 @@ supplement.defineMethod(Array.prototype, 'uniq',  function () { "use strict";
  * @throws {TypeError} if either the start or end params are omitted.
  *
  * ### Example
- *     Array.range(4,2)    // returns [4,5,6,7]
+ *     Array.range(4,7)    // returns [4,5,6,7]
  */
 supplement.defineMethod(Array, 'range',  function (start, end) { "use strict";
   if (!start || !end) throw new TypeError ('Array.range called with no range start or end')
@@ -167,10 +167,10 @@ supplement.defineMethod(Array.prototype, 'compact', function () { "use strict";
  * @returns {Object} an object containing the array split into groups
  *
  * ## Example
- *    var drinks = ["absinthe", "beer", "cider"]
- *    drinks.group(function (drink) {
- *      return drink.charAt(0)
- *    }) // returns {"a": ["absinthe"], "b": ["beer"], "c": ["cider"]}
+ *     var drinks = ["absinthe", "beer", "cider"]
+ *     drinks.group(function (drink) {
+ *       return drink.charAt(0)
+ *     }) // returns {"a": ["absinthe"], "b": ["beer"], "c": ["cider"]}
  */
 supplement.defineMethod(Array.prototype, 'group', function (fn, context) { "use strict";
   if (typeof fn !== "function") throw new TypeError ()
