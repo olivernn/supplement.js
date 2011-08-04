@@ -175,7 +175,7 @@ Array.wrap(undefined)  // returns []</code></pre>
 
 <h3>Example</h3>
 
-<pre><code>Array.range(4,2)    // returns [4,5,6,7]</code></pre>
+<pre><code>Array.range(4,7)    // returns [4,5,6,7]</code></pre>
 
 <p> </p>
 </td>
@@ -250,8 +250,167 @@ will be called with its context set to the optional context param.</p>
 <pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>, <span class="string">'toArray'</span>,  <span class="keyword">function</span> (<span class="variable">args</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
   <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">args</span> === &<span class="variable">quot</span>;<span class="variable">string</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span>(<span class="string">'Array.toArray called on non-arguments'</span>);
   <span class="keyword">return</span> <span class="class">Array</span>.<span class="variable">prototype</span>.<span class="variable">slice</span>.<span class="variable">call</span>(<span class="variable">args</span>, <span class="number integer">0</span>)
-})
-</code></pre>
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.head</h2>
+
+<p>Returns the first element from an array.  If the array is empty undefined is returned.
+The original array is left un-mutated.</p>
+
+<h2></h2>
+
+<ul><li><strong>returns</strong>: <em>Anything</em>  the first element from the array or undefined.</li></ul>
+
+<h3>Example</h3>
+
+<pre><code>var a = [1,2,3]
+a.head() // returns 1</code></pre>
+
+<p> </p>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'head'</span>, <span class="keyword">function</span> () { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="this">this</span>[<span class="number integer">0</span>]
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.tail</h2>
+
+<p>Returns everything except the head of the array.  If the array is empty an empty array
+is returned.  The original array is left un-mutated.</p>
+
+<h2></h2>
+
+<ul><li><strong>returns</strong>: <em>Array</em>  everything but the head of the array.</li></ul>
+
+<h3>Example</h3>
+
+<pre><code>var a = [1,2,3]
+a.tail() // returns [2,3]</code></pre>
+
+<p> </p>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'tail'</span>, <span class="keyword">function</span> () { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">slice</span>(<span class="number integer">1</span>)
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.compact</h2>
+
+<p>Returns a copy of the array with all undefined or null values removed, other falsy values
+are left alone.
+ </p>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'compact'</span>, <span class="keyword">function</span> () { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">filter</span>(<span class="keyword">function</span> (<span class="variable">element</span>) { <span class="keyword">return</span> (<span class="variable">element</span> !== <span class="keyword">null</span> &<span class="variable">amp</span>;&<span class="variable">amp</span>; <span class="variable">element</span> !== <span class="variable">undefined</span>) })
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.group</h2>
+
+<p>Return an object where each key is the group name and the value is the elements form the
+array that fit in that group.</p>
+
+<p>Grouping is done by the passed function, this grouping function is called for each element
+in the array and passed 3 arguments; the current element of the array, the index of that item
+in the array and the entire array.  The context of the grouping function can be changed by passing
+a second argument to group.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>params</strong>: <em>Function</em>  the grouping function</p></li><li><p><strong>params</strong>: <em>Object</em>  an optional context object for the grouping function</p></li><li><p><strong>throws</strong>: <em>TypeError</em>  when a non function is passed as the grouping function</p></li><li><p><strong>returns</strong>: <em>Object</em>  an object containing the array split into groups</p></li></ul>
+
+<h2>Example</h2>
+
+<pre><code>var drinks = ["absinthe", "beer", "cider"]
+drinks.group(function (drink) {
+  return drink.charAt(0)
+}) // returns {"a": ["absinthe"], "b": ["beer"], "c": ["cider"]}</code></pre>
+
+<p> </p>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'group'</span>, <span class="keyword">function</span> (<span class="variable">fn</span>, <span class="variable">context</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">fn</span> !== &<span class="variable">quot</span>;<span class="keyword">function</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">reduce</span>(<span class="keyword">function</span> (<span class="variable">grouped</span>, <span class="variable">elem</span>, <span class="variable">index</span>, <span class="variable">arr</span>) {
+    <span class="keyword">var</span> <span class="variable">key</span> = <span class="variable">fn</span>.<span class="variable">call</span>(<span class="variable">context</span>, <span class="variable">elem</span>, <span class="variable">index</span>, <span class="variable">arr</span>)
+    <span class="keyword">if</span> (!<span class="variable">grouped</span>[<span class="variable">key</span>]) <span class="variable">grouped</span>[<span class="variable">key</span>] = []
+    <span class="variable">grouped</span>[<span class="variable">key</span>].<span class="variable">push</span>(<span class="variable">elem</span>)
+    <span class="keyword">return</span> <span class="variable">grouped</span>
+  }, {})
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.reject</h2>
+
+<p>Returns a new array containing items from this array for which the function returns a truthy value.
+The function passed 3 arguments, the current element from the array, the index of this item in
+the array and the whole array.  The context of the function can be set by passing an optional second
+parameter.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>params</strong>: <em>Function</em>  The function which will do the rejecting</p></li><li><p><strong>params</strong>: <em>Object</em>  An optional context object for the rejecting function</p></li><li><p><strong>throws</strong>: <em>TypeError</em>  When called without a function</p></li><li><p><strong>returns</strong>: <em>Array</em> </p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'reject'</span>, <span class="keyword">function</span> (<span class="variable">fn</span>, <span class="variable">context</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">fn</span> !== &<span class="variable">quot</span>;<span class="keyword">function</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">reduce</span>(<span class="keyword">function</span> (<span class="variable">keepers</span>, <span class="variable">elem</span>, <span class="variable">index</span>, <span class="variable">arr</span>) {
+    <span class="keyword">if</span> (!<span class="variable">fn</span>.<span class="variable">call</span>(<span class="variable">context</span>, <span class="variable">elem</span>, <span class="variable">index</span>, <span class="variable">arr</span>)) <span class="variable">keepers</span>.<span class="variable">push</span>(<span class="variable">elem</span>)
+    <span class="keyword">return</span> <span class="variable">keepers</span>
+  }, [])
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.take</h2>
+
+<p>Returns the first n items from the array.  Doesn't modify the array.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>param</strong>: <em>Number</em>  the number of items to take from the array</p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'take'</span>, <span class="keyword">function</span> (<span class="variable">n</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">if</span> (!<span class="variable">n</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">slice</span>(<span class="number integer">0</span>, <span class="variable">n</span>)
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.drop</h2>
+
+<p>Drops the first n items from the array and returns the rest.  Doesn't modify the array.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>param</strong>: <em>Number</em>  the number of items to drop from the front of the array</p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'drop'</span>, <span class="keyword">function</span> (<span class="variable">n</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">if</span> (!<span class="variable">n</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">slice</span>(<span class="variable">n</span>)
+})</code></pre>
 </td>
 </tr><tr class="filename"><td><h2 id="src/function.js"><a href="#">function</a></h2></td><td>src/function.js</td></tr><tr class="code">
 <td class="docs">
@@ -399,46 +558,80 @@ will be yielded the index of the iteration each time it is called.</p>
   };
 })</code></pre>
 </td>
-</tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
+</tr>
+<tr class="code">
 <td class="docs">
-<h2>supplement.defineMethod</h2>
+<h2>Number.prototype.seconds</h2>
 
-<p>A utility function for supplementing any object with new methods.  It wraps the ES5 Object.defineProperty
-method and uses that wherever possible, falling back to plain property assignment in older browsers.</p>
+<p>Returns the number of seconds converted to milliseconds.</p>
 
-<p>The function will have <code>this</code> set to the object passed as the first parameter.</p>
+<ul><li><p><strong>see</strong>: <em>Number</em>
+.prototype.second
+## </p></li><li><p><strong>returns</strong>: <em>Number</em> </p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'seconds'</span>, <span class="keyword">function</span> () { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="this">this</span> * <span class="number integer">1000</span>
+})
+<span class="variable">supplement</span>.<span class="variable">defineAlias</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'second'</span>, <span class="string">'seconds'</span>)</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Number.prototype.minutes</h2>
+
+<p>Returns the number of minutes converted to milliseconds</p>
+
+<ul><li><p><strong>see</strong>: <em>Number</em>
+.prototype.minute
+## </p></li><li><p><strong>returns</strong>: <em>Number</em> </p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'minutes'</span>, <span class="keyword">function</span> () { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">seconds</span>() * <span class="number integer">60</span>
+})
+<span class="variable">supplement</span>.<span class="variable">defineAlias</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'minute'</span>, <span class="string">'minutes'</span>)</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Number.prototype.hours</h2>
+
+<p>Returns the number of hours converted to milliseconds</p>
+
+<ul><li><p><strong>see</strong>: <em>Number</em>
+.prototype.hour
+## </p></li><li><p><strong>returns</strong>: <em>Number</em> </p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'hours'</span>, <span class="keyword">function</span> () { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">minutes</span>() * <span class="number integer">60</span>
+})
+<span class="variable">supplement</span>.<span class="variable">defineAlias</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'hour'</span>, <span class="string">'hours'</span>)</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Number.prototype.pad</h2>
+
+<p>Returns a string representation of the number with n zeroes padding the number.</p>
 
 <h2></h2>
 
-<ul><li><p><strong>param</strong>: <em>Object</em>  the object on which to define the method</p></li><li><p><strong>param</strong>: <em>String</em>  the name of the new method</p></li><li><p><strong>param</strong>: <em>Function</em>  the function that makes up the body of the method for the object.</p></li></ul>
-
-<h3>Example</h3>
-
-<pre><code>supplement.defineMethod(Array, 'first', function () {
-  return this[0]
-})</code></pre>
-
-<p>   </p>
+<ul><li><p><strong>params</strong>: <em>Number</em>  the number of zeroes to pad the number with</p></li><li><p><strong>returns</strong>: <em>String</em> </p></li></ul>
 </td>
 <td class="code">
-<pre><code><span class="variable">defineMethod</span>: <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>) {
-    <span class="keyword">if</span> (<span class="variable">obj</span>[<span class="variable">name</span>]) <span class="keyword">return</span>
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Number</span>.<span class="variable">prototype</span>, <span class="string">'pad'</span>, <span class="keyword">function</span> (<span class="variable">zeroes</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">zeroes</span> !== &<span class="variable">quot</span>;<span class="variable">number</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span>
+  <span class="keyword">if</span> (<span class="variable">zeroes</span> &<span class="variable">lt</span>; <span class="number integer">0</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">RangeError</span>
 
-    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="class">Object</span>.<span class="variable">defineProperty</span> == <span class="string">'function'</span>) {
-      <span class="keyword">try</span> {
-        <span class="class">Object</span>.<span class="variable">defineProperty</span>(<span class="variable">obj</span>, <span class="variable">name</span>, {
-          <span class="variable">value</span>: <span class="variable">fn</span>,
-          <span class="variable">enumerable</span>: <span class="variable">false</span>,
-          <span class="variable">configurable</span>: <span class="variable">false</span>
-        })
-      } <span class="keyword">catch</span> (<span class="variable">e</span>) { } <span class="comment">// catch for IE8's broken defineProperty implementation</span>
-    }
-
-    <span class="keyword">if</span> (!<span class="variable">obj</span>[<span class="variable">name</span>]) {
-      <span class="variable">obj</span>[<span class="variable">name</span>] = <span class="variable">fn</span>
-    };
+  <span class="keyword">var</span> <span class="variable">out</span> = <span class="this">this</span> + &<span class="variable">quot</span>;&<span class="variable">quot</span>;
+  <span class="keyword">while</span> (<span class="class">Math</span>.<span class="variable">floor</span>(<span class="variable">zeroes</span>--)) {
+    <span class="variable">out</span> = &<span class="variable">quot</span>;<span class="number integer">0</span>&<span class="variable">quot</span>; + <span class="variable">out</span>
   }
-}</code></pre>
+  <span class="keyword">return</span> <span class="variable">out</span>
+})
+</code></pre>
 </td>
 </tr><tr class="filename"><td><h2 id="src/object.js"><a href="#">object</a></h2></td><td>src/object.js</td></tr><tr class="code">
 <td class="docs">
@@ -499,6 +692,81 @@ Object.provide(a, 'foo', 'bar', 'baz)
   })
   <span class="keyword">return</span> <span class="variable">node</span>
 });</code></pre>
+</td>
+</tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
+<td class="docs">
+<h2>supplement.onClash</h2>
+
+<p>A callback that will be called when supplement attempts to define a method that would cause a clash.
+The callback function will be passed the object that was trying to be modified by supplement, the
+property name that was trying to be set and the value that the property was being set to.</p>
+
+<p>Use this to decide whether a clash is fatal for your application and throw a big error if so.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>params</strong>: <em>Function</em>  the callback function</p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="keyword">var</span> <span class="variable">onClash</span> = <span class="keyword">function</span> (<span class="variable">fn</span>) {
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">fn</span> !== &<span class="variable">quot</span>;<span class="keyword">function</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+    <span class="variable">clashCallbacks</span>.<span class="variable">push</span>(<span class="variable">fn</span>)
+  }</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>supplement.defineAlias</h2>
+
+<p>A utility function for providing an alias to an objects method.</p>
+
+<ul><li><strong>see</strong>: <em>supplement</em>
+.defineMethod</li></ul>
+</td>
+<td class="code">
+<pre><code><span class="keyword">var</span> <span class="variable">defineAlias</span> = <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">alias</span>, <span class="variable">original</span>) {
+    <span class="this">this</span>.<span class="variable">defineMethod</span>(<span class="variable">obj</span>, <span class="variable">alias</span>, <span class="variable">obj</span>[<span class="variable">original</span>])
+  }</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>supplement.defineMethod</h2>
+
+<p>A utility function for supplementing any object with new methods.  It wraps the ES5 Object.defineProperty
+method and uses that wherever possible, falling back to plain property assignment in older browsers.</p>
+
+<p>The function will have <code>this</code> set to the object passed as the first parameter.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>param</strong>: <em>Object</em>  the object on which to define the method</p></li><li><p><strong>param</strong>: <em>String</em>  the name of the new method</p></li><li><p><strong>param</strong>: <em>Function</em>  the function that makes up the body of the method for the object.</p></li></ul>
+
+<h3>Example</h3>
+
+<pre><code>supplement.defineMethod(Array, 'first', function () {
+  return this[0]
+})</code></pre>
+
+<p>   </p>
+</td>
+<td class="code">
+<pre><code><span class="keyword">var</span> <span class="variable">defineMethod</span> = <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>) {
+    <span class="keyword">if</span> (<span class="variable">obj</span>[<span class="variable">name</span>]) <span class="keyword">return</span> <span class="variable">callClashCallbacks</span>(<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>)
+
+    <span class="comment">// if defineProperties is supported then a working version</span>
+    <span class="comment">// of defineProperty will be available.  Work around for IE8's</span>
+    <span class="comment">// broken implementation of defineProperty.</span>
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="class">Object</span>.<span class="variable">defineProperties</span> == <span class="string">'function'</span>) {
+      <span class="class">Object</span>.<span class="variable">defineProperty</span>(<span class="variable">obj</span>, <span class="variable">name</span>, {
+        <span class="variable">value</span>: <span class="variable">fn</span>,
+        <span class="variable">enumerable</span>: <span class="variable">false</span>,
+        <span class="variable">configurable</span>: <span class="variable">false</span>
+      })
+    } <span class="keyword">else</span> {
+      <span class="variable">obj</span>[<span class="variable">name</span>] = <span class="variable">fn</span>
+    };
+  }</code></pre>
 </td>
 </tr>	</body>
 </html></tbody></table>
