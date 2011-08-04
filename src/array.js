@@ -130,7 +130,7 @@ supplement.defineMethod(Array.prototype, 'tail', function () { "use strict";
  * ## Array.prototype.compact
  */
 supplement.defineMethod(Array.prototype, 'compact', function () { "use strict";
-  return this.filter(function (element) { return element })
+  return this.filter(function (element) { return (element !== null && element !== undefined) })
 })
 
 /**

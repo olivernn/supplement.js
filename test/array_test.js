@@ -133,11 +133,11 @@ test("tail returns an empty array if there is no tail", function () {
   same(arr.tail(), [], "should return an empty array")
 })
 
-test("compact returns a copy of the array with all falsy values removed", function () {
-  var arr = [1, null, undefined, "", "bar", {foo: "bar"}, [1,2,3]]
+test("compact returns a copy of the array with all null values removed", function () {
+  var arr = [1, null, undefined, "", "bar", {foo: "bar"}, [1,2,3], false]
 
-  same(arr.compact(), [1, "bar", {foo: "bar"}, [1,2,3]], "should remove all falsy values from the array")
-  same(arr, [1, null, undefined, "", "bar", {foo: "bar"}, [1,2,3]], "should leave the original array intact")
+  same(arr.compact(), [1, "", "bar", {foo: "bar"}, [1,2,3], false], "should remove all falsy values from the array")
+  same(arr, [1, null, undefined, "", "bar", {foo: "bar"}, [1,2,3], false], "should leave the original array intact")
 })
 
 test("group returns an object with groups as arrays under a property", function () {
