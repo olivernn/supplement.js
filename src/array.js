@@ -114,6 +114,14 @@ supplement.defineMethod(Array, 'toArray',  function (args) { "use strict";
 
 /**
  * ## Array.prototype.head
+ * Returns the first element from an array.  If the array is empty undefined is returned.
+ * The original array is left un-mutated.
+ *
+ * @returns {Anything} the first element from the array or undefined.
+ *
+ * ### Example
+ *     var a = [1,2,3]
+ *     a.head() // returns 1
  */
 supplement.defineMethod(Array.prototype, 'head', function () { "use strict";
   return this[0]
@@ -121,6 +129,14 @@ supplement.defineMethod(Array.prototype, 'head', function () { "use strict";
 
 /**
  * ## Array.prototype.tail
+ * Returns everything except the head of the array.  If the array is empty an empty array
+ * is returned.  The original array is left un-mutated.
+ *
+ * @returns {Array} everything but the head of the array.
+ *
+ * ### Example
+ *     var a = [1,2,3]
+ *     a.tail() // returns [2,3]
  */
 supplement.defineMethod(Array.prototype, 'tail', function () { "use strict";
   return this.slice(1)
@@ -128,6 +144,8 @@ supplement.defineMethod(Array.prototype, 'tail', function () { "use strict";
 
 /**
  * ## Array.prototype.compact
+ * Returns a copy of the array with all undefined or null values removed, other falsy values
+ * are left alone.
  */
 supplement.defineMethod(Array.prototype, 'compact', function () { "use strict";
   return this.filter(function (element) { return (element !== null && element !== undefined) })
@@ -135,6 +153,24 @@ supplement.defineMethod(Array.prototype, 'compact', function () { "use strict";
 
 /**
  * ## Array.prototype.group
+ * Return an object where each key is the group name and the value is the elements form the
+ * array that fit in that group.
+ *
+ * Grouping is done by the passed function, this grouping function is called for each element
+ * in the array and passed 3 arguments; the current element of the array, the index of that item
+ * in the array and the entire array.  The context of the grouping function can be changed by passing
+ * a second argument to group.
+ *
+ * @params {Function} the grouping function
+ * @params {Object} an optional context object for the grouping function
+ * @throws {TypeError} when a non function is passed as the grouping function
+ * @returns {Object} an object containing the array split into groups
+ *
+ * ## Example
+ *    var drinks = ["absinthe", "beer", "cider"]
+ *    drinks.group(function (drink) {
+ *      return drink.charAt(0)
+ *    }) // returns {"a": ["absinthe"], "b": ["beer"], "c": ["cider"]}
  */
 supplement.defineMethod(Array.prototype, 'group', function (fn, context) { "use strict";
   if (typeof fn !== "function") throw new TypeError ()
@@ -149,6 +185,15 @@ supplement.defineMethod(Array.prototype, 'group', function (fn, context) { "use 
 
 /**
  * ## Array.prototype.reject
+ * Returns a new array containing items from this array for which the function returns a truthy value.
+ * The function passed 3 arguments, the current element from the array, the index of this item in
+ * the array and the whole array.  The context of the function can be set by passing an optional second
+ * parameter.
+ *
+ * @params {Function} The function which will do the rejecting
+ * @params {Object} An optional context object for the rejecting function
+ * @throws {TypeError} When called without a function
+ * @returns {Array}
  */
 supplement.defineMethod(Array.prototype, 'reject', function (fn, context) { "use strict";
   if (typeof fn !== "function") throw new TypeError ()
@@ -161,6 +206,9 @@ supplement.defineMethod(Array.prototype, 'reject', function (fn, context) { "use
 
 /**
  * ## Array.prototype.take
+ * Returns the first n items from the array.  Doesn't modify the array.
+ *
+ * @param {Number} the number of items to take from the array
  */
 supplement.defineMethod(Array.prototype, 'take', function (n) { "use strict";
   if (!n) throw new TypeError ()
@@ -168,6 +216,12 @@ supplement.defineMethod(Array.prototype, 'take', function (n) { "use strict";
   return this.slice(0, n)
 })
 
+/**
+ * ## Array.prototype.drop
+ * Drops the first n items from the array and returns the rest.  Doesn't modify the array.
+ *
+ * @param {Number} the number of items to drop from the front of the array
+ */
 supplement.defineMethod(Array.prototype, 'drop', function (n) { "use strict";
   if (!n) throw new TypeError ()
 

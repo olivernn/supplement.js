@@ -4,6 +4,12 @@
  */
 supplement = {
 
+  /**
+   * ## supplement.defineAlias
+   * A utility function for providing an alias to an objects method.
+   *
+   * @see supplement.defineMethod
+   */
   defineAlias: function (obj, alias, original) {
     this.defineMethod(obj, alias, obj[original])
   },
