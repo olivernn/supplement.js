@@ -2,7 +2,30 @@
  * Namespace
  * @private
  */
-supplement = {
+supplement = (function () {
+
+  var clashCallbacks = []
+
+  var callClashCallbacks = function (obj, methodName, fn) {
+    clashCallbacks.forEach(function (cb) {
+      cb(obj, methodName, fn)
+    })
+  }
+
+  /**
+   * ## supplement.onClash
+   * A callback that will be called when supplement attempts to define a method that would cause a clash.
+   * The callback function will be passed the object that was trying to be modified by supplement and the
+   * property name that was trying to be set.
+   *
+   * Use this to decide whether a clash is fatal for your application and throw a big error if so.
+   *
+   * @params {Function} the callback function
+   */
+  var onClash = function (fn) {
+    if (typeof fn !== "function") throw new TypeError ()
+    clashCallbacks.push(fn)
+  }
 
   /**
    * ## supplement.defineAlias
@@ -10,9 +33,9 @@ supplement = {
    *
    * @see supplement.defineMethod
    */
-  defineAlias: function (obj, alias, original) {
+  var defineAlias = function (obj, alias, original) {
     this.defineMethod(obj, alias, obj[original])
-  },
+  }
 
   /**
    * ## supplement.defineMethod
@@ -30,8 +53,8 @@ supplement = {
    *       return this[0]
    *     })
    */
-  defineMethod: function (obj, name, fn) {
-    if (obj[name]) return
+  var defineMethod = function (obj, name, fn) {
+    if (obj[name]) return callClashCallbacks(obj, name, fn)
 
     // if defineProperties is supported then a working version
     // of defineProperty will be available.  Work around for IE8's
@@ -46,4 +69,14 @@ supplement = {
       obj[name] = fn
     };
   }
-}
+
+  /**
+   * Exposing methods
+   * @private
+   */
+  return {
+    defineAlias: defineAlias,
+    defineMethod: defineMethod,
+    onClash: onClash
+  }
+})()
