@@ -34,6 +34,10 @@ test("range throw TypeError if start or end are missing", function () {
   }, TypeError, "Need both start and end params")
 })
 
+test("range works with a zero based start number", function () {
+  same(Array.range(0, 4), [0,1,2,3,4], "should return an array with start and end as specified")
+})
+
 test("uniq returns an array with all duplicates removed", function () {
   var arr = [1,1,1,2,2,3]
 

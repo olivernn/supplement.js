@@ -55,7 +55,7 @@ supplement.defineMethod(Array.prototype, 'uniq',  function () { "use strict";
  *     Array.range(4,7)    // returns [4,5,6,7]
  */
 supplement.defineMethod(Array, 'range',  function (start, end) { "use strict";
-  if (!start || !end) throw new TypeError ('Array.range called with no range start or end')
+  if ((typeof start !== 'number') || (typeof end !== 'number')) throw new TypeError ('Array.range called with no range start or end')
   var a = []
   for (var i=start; i <= end; i++) {
    a.push(i)
