@@ -82,3 +82,78 @@ test("provide works with an arbitrary deep nesting", function () {
     }
   })
 })
+
+test("typeOf returns the correct type of the passed object", function () {
+  var obj = {},
+      arr = [],
+      str = "",
+      num = 0,
+      bool = true,
+      fn = function () {},
+      regex = /foo/,
+      date = new Date ()
+
+  equal(Object.typeOf(obj), "object", "obj is an object")
+  equal(Object.typeOf(arr), "array", "arr is an array")
+  equal(Object.typeOf(str), "string", "str is a string")
+  equal(Object.typeOf(num), "number", "num is a number")
+  equal(Object.typeOf(bool), "boolean", "bool is a boolean")
+  equal(Object.typeOf(fn), "function", "fn is a function")
+  equal(Object.typeOf(regex), "regexp", "regex is a regexp")
+  equal(Object.typeOf(date), "date", "date is a date")
+})
+
+var types = [{}, [], "", 0, true, function () {}, /foo/, new Date ()]
+
+var forEachTypeExcept = function (exception, fn) {
+  types.filter(function (type) {
+    return Object.typeOf(type) !== exception
+  }).forEach(fn)
+}
+
+var returnsFalseForEachTypeExcept = function (exception) {
+  var methodName = 'is' + exception.replace(/^(\w)/, function (match) {
+    return match.toUpperCase()
+  })
+
+  forEachTypeExcept(exception, function (type) {
+    ok(!Object[methodName](type))
+  })
+}
+
+test("isArray returns true if the object is an array", function () {
+  ok(Object.isArray([]))
+  returnsFalseForEachTypeExcept('array')
+})
+
+test("isFunction returns true if the object is a function", function () {
+  ok(Object.isFunction(function () {}))
+  returnsFalseForEachTypeExcept('function')
+})
+
+test("isString returns true if the object is a string", function () {
+  ok(Object.isString("asd"))
+  forEachTypeExcept("string", function (type) {
+    ok(!Object.isString(type))
+  })
+})
+
+test("isNumber returns true if the object is a number", function () {
+  ok(Object.isNumber(1))
+  returnsFalseForEachTypeExcept("number")
+})
+
+test("isBoolean returns true if the object is a boolean", function () {
+  ok(Object.isBoolean(false))
+  returnsFalseForEachTypeExcept("boolean")
+})
+
+test("isRegexp returns true if the object is a regex", function () {
+  ok(Object.isRegexp(/foo/))
+  returnsFalseForEachTypeExcept("regexp")
+})
+
+test("isDate returns true if the object is a date", function () {
+  ok(Object.isDate(new Date ()))
+  returnsFalseForEachTypeExcept("date")
+})
