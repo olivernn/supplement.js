@@ -230,9 +230,15 @@ supplement.defineMethod(Array.prototype, 'drop', function (n) { "use strict";
 
 /**
  * ## Array.prototype.pluck
- * Returns array of values for passed property / method name on each member
+ * Returns array of values for passed property / method name on each member.
+ *
+ * If the element in the array has a property with a matching name it will be returned,
+ * if the property is a function then it will be called, without any parameters, and the
+ * result will be returned.  If no property matches then undefined will be returned.
  *
  * @param {propname} the name of a property or method to collect from each member
+ * @throws {TypeError} when called without a property name
+ * @returns {Array} an array containing the properties and/or result of method calls
  */
 supplement.defineMethod(Array.prototype, 'pluck', function (n) { "use strict";
   if (!n || typeof n !== 'string') throw new TypeError ()
