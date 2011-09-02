@@ -17,7 +17,7 @@ supplement.defineMethod(Object, 'values', function (obj) { "use strict";
 });
 
 /**
- * Object.provide
+ * ## Object.provide
  * Returns a property of an object which is nested arbitrarily deep within another object.  If at any point
  * along the chain of properties it finds a property that doesn't exist it populates that property with a 
  * blank object and continues.
@@ -45,3 +45,42 @@ supplement.defineMethod(Object, 'provide', function (obj) { "use strict";
   })
   return node
 });
+
+/**
+ * ## Object.typeOf
+ * A more robust version of the native typeof command.  This function will reliably return the correct type
+ * of the passed object.  It is able to distinguish between arrays, arguments and plain objects for example.
+ *
+ * @params {Object} any kind of object for which you want to know its type.
+ * @returns {String} the string type of the object.
+ *
+ * ### Example
+ *     Object.typeOf([]) // returns 'array'
+ *     Object.typeOf({}) // returns 'object'
+ *     Object.typeOF(1)  // returns 'number'
+ */
+supplement.defineMethod(Object, 'typeOf', function (obj) { "use strict";
+  return Object.prototype.toString.call(obj).match(/\s([a-z|A-Z]+)/)[1].toLowerCase()
+});
+
+/**
+ * ## Object.isArray
+ * ## Object.isFunction
+ * ## Object.isString
+ * ## Object.isNumber
+ * ## Object.isBoolean
+ * ## Object.isArguments
+ * ## Object.isRegexp
+ * ## Object.isDate
+ * Convinience wrappers around `Object.typeOf`.  For checking arrays it is better to use the native
+ * `Array.isArray` method.
+ *
+ * @see Array.isArray
+ * @param {Object} the object to test
+ * @returns {Boolean} true only if the object is of the correct type
+ */
+(["Array", "Function", "String", "Number", "Boolean", "Regexp", "Date"]).forEach(function (type) {
+  supplement.defineMethod(Object, 'is' + type, function (obj) { "use strict";
+    return Object.typeOf(obj) == type.toLowerCase()
+  })
+})
