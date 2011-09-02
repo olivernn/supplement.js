@@ -264,3 +264,20 @@ test("drop returns a copy of the array with the first n elements removed", funct
   same(afterDrop, [3,4], "should return a new array with the first n elements of the old array removed")
   same(arr, [1,2,3,4], "should leave the original array alone")
 })
+
+test("pluck returns value of property or method of members, or undefined", function () {
+  var arr = [{name: 'n1'}, {name: function (){return 'n2'}}, 'foo', 10]
+  var out = arr.pluck('name')
+
+  same(out, ['n1', 'n2', undefined, undefined], "should return the matched properties or methods")
+})
+
+test("pluck throws TypeError if prop name is missing or not a string", function () {
+  raises(function () {
+    [].pluck()
+  }, TypeError, "Need property name argument")
+
+  raises(function () {
+    [].pluck(1)
+  }, TypeError, "Property name argument must be a string")
+})
