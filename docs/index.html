@@ -181,7 +181,7 @@ Array.wrap(undefined)  // returns []</code></pre>
 </td>
 <td class="code">
 <pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>, <span class="string">'range'</span>,  <span class="keyword">function</span> (<span class="variable">start</span>, <span class="variable">end</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
-  <span class="keyword">if</span> (!<span class="variable">start</span> || !<span class="variable">end</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> (<span class="string">'Array.range called with no range start or end'</span>)
+  <span class="keyword">if</span> ((<span class="keyword">typeof</span> <span class="variable">start</span> !== <span class="string">'number'</span>) || (<span class="keyword">typeof</span> <span class="variable">end</span> !== <span class="string">'number'</span>)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> (<span class="string">'Array.range called with no range start or end'</span>)
   <span class="keyword">var</span> <span class="variable">a</span> = []
   <span class="keyword">for</span> (<span class="keyword">var</span> <span class="variable">i</span>=<span class="variable">start</span>; <span class="variable">i</span> &<span class="variable">lt</span>;= <span class="variable">end</span>; <span class="variable">i</span>++) {
    <span class="variable">a</span>.<span class="variable">push</span>(<span class="variable">i</span>)
@@ -410,6 +410,36 @@ parameter.</p>
   <span class="keyword">if</span> (!<span class="variable">n</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
 
   <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">slice</span>(<span class="variable">n</span>)
+})</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Array.prototype.pluck</h2>
+
+<p>Returns array of values for passed property / method name on each member.</p>
+
+<p>If the element in the array has a property with a matching name it will be returned,
+if the property is a function then it will be called, without any parameters, and the
+result will be returned.  If no property matches then undefined will be returned.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>param</strong>: <em>propname</em>  the name of a property or method to collect from each member</p></li><li><p><strong>throws</strong>: <em>TypeError</em>  when called without a property name</p></li><li><p><strong>returns</strong>: <em>Array</em>  an array containing the properties and/or result of method calls</p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Array</span>.<span class="variable">prototype</span>, <span class="string">'pluck'</span>, <span class="keyword">function</span> (<span class="variable">n</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">if</span> (!<span class="variable">n</span> || <span class="keyword">typeof</span> <span class="variable">n</span> !== <span class="string">'string'</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+
+  <span class="keyword">return</span> <span class="this">this</span>.<span class="variable">map</span>(<span class="keyword">function</span> (<span class="variable">member</span>) {
+    <span class="keyword">var</span> <span class="variable">value</span>
+    <span class="keyword">if</span>(<span class="variable">member</span>[<span class="variable">n</span>] !== <span class="variable">undefined</span>) {
+      <span class="variable">value</span> = <span class="keyword">typeof</span> <span class="variable">member</span>[<span class="variable">n</span>] == <span class="string">'function'</span> ? <span class="variable">member</span>[<span class="variable">n</span>]() : <span class="variable">member</span>[<span class="variable">n</span>];
+    } <span class="keyword">else</span> {
+      <span class="variable">value</span> = <span class="variable">undefined</span>
+    }
+    <span class="keyword">return</span> <span class="variable">value</span>
+  })
 })</code></pre>
 </td>
 </tr><tr class="filename"><td><h2 id="src/function.js"><a href="#">function</a></h2></td><td>src/function.js</td></tr><tr class="code">
@@ -660,8 +690,9 @@ chain.</p>
 </tr>
 <tr class="code">
 <td class="docs">
-<p>Object.provide
-Returns a property of an object which is nested arbitrarily deep within another object.  If at any point
+<h2>Object.provide</h2>
+
+<p>Returns a property of an object which is nested arbitrarily deep within another object.  If at any point
 along the chain of properties it finds a property that doesn't exist it populates that property with a 
 blank object and continues.</p>
 
@@ -692,6 +723,65 @@ Object.provide(a, 'foo', 'bar', 'baz)
   })
   <span class="keyword">return</span> <span class="variable">node</span>
 });</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Object.typeOf</h2>
+
+<p>A more robust version of the native typeof command.  This function will reliably return the correct type
+of the passed object.  It is able to distinguish between arrays, arguments and plain objects for example.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>params</strong>: <em>Object</em>  any kind of object for which you want to know its type.</p></li><li><p><strong>returns</strong>: <em>String</em>  the string type of the object.</p></li></ul>
+
+<h3>Example</h3>
+
+<pre><code>Object.typeOf([]) // returns 'array'
+Object.typeOf({}) // returns 'object'
+Object.typeOF(1)  // returns 'number'</code></pre>
+
+<p> </p>
+</td>
+<td class="code">
+<pre><code><span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Object</span>, <span class="string">'typeOf'</span>, <span class="keyword">function</span> (<span class="variable">obj</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+  <span class="keyword">return</span> <span class="class">Object</span>.<span class="variable">prototype</span>.<span class="variable">toString</span>.<span class="variable">call</span>(<span class="variable">obj</span>).<span class="variable">match</span>(<span class="regexp">/\s([a-z|A-Z]+)/</span>)[<span class="number integer">1</span>].<span class="variable">toLowerCase</span>()
+});</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>Object.isArray</h2>
+
+<h2>Object.isFunction</h2>
+
+<h2>Object.isString</h2>
+
+<h2>Object.isNumber</h2>
+
+<h2>Object.isBoolean</h2>
+
+<h2>Object.isArguments</h2>
+
+<h2>Object.isRegexp</h2>
+
+<h2>Object.isDate</h2>
+
+<p>Convinience wrappers around <code>Object.typeOf</code>.  For checking arrays it is better to use the native
+<code>Array.isArray</code> method.</p>
+
+<ul><li><p><strong>see</strong>: <em>Array</em>
+.isArray
+## </p></li><li><p><strong>param</strong>: <em>Object</em>  the object to test</p></li><li><p><strong>returns</strong>: <em>Boolean</em>  true only if the object is of the correct type</p></li></ul>
+</td>
+<td class="code">
+<pre><code>([&<span class="variable">quot</span>;<span class="class">Array</span>&<span class="variable">quot</span>;, &<span class="variable">quot</span>;<span class="class">Function</span>&<span class="variable">quot</span>;, &<span class="variable">quot</span>;<span class="class">String</span>&<span class="variable">quot</span>;, &<span class="variable">quot</span>;<span class="class">Number</span>&<span class="variable">quot</span>;, &<span class="variable">quot</span>;<span class="class">Boolean</span>&<span class="variable">quot</span>;, &<span class="variable">quot</span>;<span class="class">Regexp</span>&<span class="variable">quot</span>;, &<span class="variable">quot</span>;<span class="class">Date</span>&<span class="variable">quot</span>;]).<span class="variable">forEach</span>(<span class="keyword">function</span> (<span class="variable">type</span>) {
+  <span class="variable">supplement</span>.<span class="variable">defineMethod</span>(<span class="class">Object</span>, <span class="string">'is'</span> + <span class="variable">type</span>, <span class="keyword">function</span> (<span class="variable">obj</span>) { &<span class="variable">quot</span>;<span class="variable">use</span> <span class="variable">strict</span>&<span class="variable">quot</span>;;
+    <span class="keyword">return</span> <span class="class">Object</span>.<span class="variable">typeOf</span>(<span class="variable">obj</span>) == <span class="variable">type</span>.<span class="variable">toLowerCase</span>()
+  })
+})
+</code></pre>
 </td>
 </tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
 <td class="docs">
