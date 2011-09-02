@@ -239,7 +239,7 @@ supplement.defineMethod(Array.prototype, 'pluck', function (n) { "use strict";
 
   return this.map(function (member) {
     var value
-    if(member.hasOwnProperty(n)) {
+    if(member[n] !== undefined) {
       value = typeof member[n] == 'function' ? member[n]() : member[n];
     } else {
       value = undefined
