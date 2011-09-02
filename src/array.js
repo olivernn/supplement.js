@@ -227,3 +227,23 @@ supplement.defineMethod(Array.prototype, 'drop', function (n) { "use strict";
 
   return this.slice(n)
 })
+
+/**
+ * ## Array.prototype.pluck
+ * Returns array of values for passed property / method name on each member
+ *
+ * @param {propname} the name of a property or method to collect from each member
+ */
+supplement.defineMethod(Array.prototype, 'pluck', function (n) { "use strict";
+  if (!n || typeof n !== 'string') throw new TypeError ()
+
+  return this.map(function (member) {
+    var value
+    if(member[n] !== undefined) {
+      value = typeof member[n] == 'function' ? member[n]() : member[n];
+    } else {
+      value = undefined
+    }
+    return value
+  })
+})
