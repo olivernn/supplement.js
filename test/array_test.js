@@ -271,3 +271,13 @@ test("pluck returns value of property or method of members, or undefined", funct
 
   same(out, ['n1', 'n2', undefined, undefined], "should return the matched properties or methods")
 })
+
+test("pluck throws TypeError if prop name is missing or not a string", function () {
+  raises(function () {
+    [].pluck()
+  }, TypeError, "Need property name argument")
+
+  raises(function () {
+    [].pluck(1)
+  }, TypeError, "Property name argument must be a string")
+})
