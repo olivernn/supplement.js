@@ -4,15 +4,17 @@
     <link rel="icon" href="favicon.png" />
     <link rel="stylesheet" href="site/styles.css" type="text/css" media="screen" charset="utf-8">
     <script type="text/javascript">
+
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-6178997-7']);
+      _gaq.push(['_setAccount', 'UA-25695442-1']);
       _gaq.push(['_trackPageview']);
-      
+
       (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+
     </script>
   </head>
   <body>
@@ -34,7 +36,7 @@
       </header>
       <section>
         <p>Include the <a href="https://raw.github.com/olivernn/supplement.js/master/dist/supplement-0.1.1.min.js">supplement.js</a> source before any JavaScript in which you wish to use the extras.</p>
-        <p>Supplement.js has a single dependency on its sister library <a href="http://augmentjs.com">augment.js</a> which should be included before supplement.js.</p>
+        <p>Supplement.js requires an ECMAScript 5 compliant JavaScript environment.  In older browsers you should include <a href="http://augmentjs.com">augment.js</a> before supplement.js.</p>
       </section>
     </article>
 
@@ -44,26 +46,103 @@
       </header>
 
       <section>
-        <ul>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Array.wrap</a> - Wraps its argument in an array, unless it is already an array.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Array.range</a> - Creates flexible lists of numbers - handy for forEach and map loops.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Array.toArray</a> - Converts an array-like object into a real array - useful for converting the argument's object.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Array.prototype.detect</a> - Returns the first element for which the function returns true, then stops iterating.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Object.values</a> - Returns an array of all enumerable property values directly belonging to the given object.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Object.provide</a> - Ensures the existence of the object structure provided by the arguments. It checks whether each property form the arguments exists, and if not, initialises it.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Function.prototype.singleUse</a> - Returns a function that can only be used once.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Function.prototype.throttle</a> - Returns a function that is throttled to the rate provided as an argument.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Function.prototype.debounce</a> - Returns a function whose execution is delayed for a defined amount of time.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Function.prototype.curry</a> - Returns a function that has had some of its arguments preset.</p></li>
-          <li><p><a href="http://olivernn.github.com/supplement.js/docs">Number.prototype.times</a> - Executes the passed function a given number of times.</p></li>
-        </ul>
+        <dl>
+          <lh>Array</lh>
+
+          <dt>Array.wrap</dt>
+          <dd>Wraps the parameter in an array, ensures that the return value is always an array.</dd>
+
+          <dt>Array.prototype.uniq</dt>
+          <dd>Returns a new array with all the dupicate elements removed.</dd>
+
+          <dt>Array.range</dt>
+          <dd>Returns a new array with elements between and including the start and end params.</dd>
+
+          <dt>Array.prototype.detect</dt>
+          <dd>Returns the first item from the array for which the function evaluates to true.</dd>
+
+          <dt>Array.toArray</dt>
+          <dd>Converts an array like object into an array.</dd>
+
+          <dt>Array.prototype.head</dt>
+          <dd>Returns the first element from an array.</dd>
+
+          <dt>Array.prototype.tail</dt>
+          <dd>Returns everything except the head of the array.</dd>
+
+          <dt>Array.prototype.compact</dt>
+          <dd>Returns a copy of the array with all undefined or null values removed.</dd>
+
+          <dt>Array.prototype.group</dt>
+          <dd>Return an object where each key is the group name and the value is the elements form the array that fit in that group.</dd>
+
+          <dt>Array.prototype.reject</dt>
+          <dd>Returns a new array containing items from this array for which the function returns false.</dd>
+
+          <dt>Array.prototype.take</dt>
+          <dd>Returns the first n items from the array.</dd>
+
+          <dt>Array.prototype.drop</dt>
+          <dd>Drops the first n items from the array and returns the rest.</dd>
+
+          <dt>Array.prototype.pluck</dt>
+          <dd>Returns array of values for passed property / method name on each member.</dd>
+        </dl>
+
+        <dl>
+          <lh>Function</lh>
+
+          <dt>Function.prototype.singleUse</dt>
+          <dd>Returns a function which can only be called once.</dd>
+
+          <dt>Function.prototype.curry</dt>
+          <dd>Returns a function with one or more arguments already set.</dd>
+
+          <dt>Function.prototype.throttle</dt>
+          <dd>Returns a function that will only execute once every x amount of milliseconds.</dd>
+
+          <dt>Function.prototype.debounce</dt>
+          <dd>Returns a function that will only execute after it has stopped being called for x milliseconds.</dd>
+        </dl>
+
+        <dl>
+          <lh>Number</lh>
+
+          <dt>Number.prototype.times</dt>
+          <dd>Executes the supplied function x number of times.</dd>
+
+          <dt>Number.prototype.seconds</dt>
+          <dd>Returns the number of seconds in milliseconds.</dd>
+
+          <dt>Number.prototype.minutes</dt>
+          <dd>Returns the number of minutes in milliseconds.</dd>
+
+          <dt>Number.prototype.hours</dt>
+          <dd>Returns the number of hours in milliseconds.</dd>
+
+          <dt>Number.prototype.pad</dt>
+          <dd>Returns a string representation of the number with n zeroes padding the number.</dd>
+        </dl>
+
+        <dl>
+          <lh>Object</lh>
+
+          <dt>Object.values</dt>
+          <dd>Returns all the enumerable values of an object.</dd>
+
+          <dt>Object.provide</dt>
+          <dd>Returns a property of an object which is nested arbitrarily deep within another object.</dd>
+
+          <dt>Object.typeOf</dt>
+          <dd>A more robust version of the native typeof command.</dd>
+        </dl>
       </section>
     </article>
 
     <footer>
       <ul>
         <li><a href="https://github.com/olivernn/supplement.js">Source</a></li>
-        <li><a href="http://olivernn.github.com/supplement.js">Docs</a></li>
+        <li><a href="http://olivernn.github.com/supplement.js/docs/index.html">Docs</a></li>
         <li><a href="tests.html">Tests</a></li>
       </ul>
     </footer>

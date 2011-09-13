@@ -10,11 +10,11 @@ body {
 }
 
 h1 {
-  font-size: 5em;
+  font-size: 4.4em;
   font-weight: bolder;
   color: #f5f5f5;
   margin: 10px;
-  text-shadow: 0px 0px 2px #364F38;
+  text-shadow: 0px 0px 1px #111;
 }
 
 h1 span {
@@ -94,17 +94,41 @@ footer li {
   display: inline;
 }
 
+dl {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  font-size: 1.4em;
+}
+
+dl:first-child {
+  padding-top: 0px;
+}
+
+lh {
+  display: block;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+dt {
+  margin-bottom: 10px;
+}
+
+dd {
+  margin-right: 10px;
+  margin-bottom: 20px;
+  font-size: 0.8em;
+}
+
 .intro {
-  background-color: #00DE7E;
-/*  background-color: #75E245;*/
+  background-color: #Dfcc1f;
 }
 
 .usage {
-  background-color: #00AF63;
-/*  background-color: #61DA55;*/
+  background-color: #Dbbc1f;
 }
 
 .methods {
-  background-color: #00884E;
-/*  background-color: #46D959;*/
+  background-color: #Dba91f;
 }
