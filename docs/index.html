@@ -357,8 +357,8 @@ drinks.group(function (drink) {
 <td class="docs">
 <h2>Array.prototype.reject</h2>
 
-<p>Returns a new array containing items from this array for which the function returns a truthy value.
-The function passed 3 arguments, the current element from the array, the index of this item in
+<p>Returns a new array containing items from this array for which the function returns false.
+The function is passed 3 arguments, the current element from the array, the index of this item in
 the array and the whole array.  The context of the function can be set by passing an optional second
 parameter.</p>
 
@@ -441,6 +441,81 @@ result will be returned.  If no property matches then undefined will be returned
     <span class="keyword">return</span> <span class="variable">value</span>
   })
 })</code></pre>
+</td>
+</tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
+<td class="docs">
+<h2>supplement.onClash</h2>
+
+<p>A callback that will be called when supplement attempts to define a method that would cause a clash.
+The callback function will be passed the object that was trying to be modified by supplement, the
+property name that was trying to be set and the value that the property was being set to.</p>
+
+<p>Use this to decide whether a clash is fatal for your application and throw a big error if so.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>params</strong>: <em>Function</em>  the callback function</p></li></ul>
+</td>
+<td class="code">
+<pre><code><span class="keyword">var</span> <span class="variable">onClash</span> = <span class="keyword">function</span> (<span class="variable">fn</span>) {
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">fn</span> !== &<span class="variable">quot</span>;<span class="keyword">function</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
+    <span class="variable">clashCallbacks</span>.<span class="variable">push</span>(<span class="variable">fn</span>)
+  }</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>supplement.defineAlias</h2>
+
+<p>A utility function for providing an alias to an objects method.</p>
+
+<ul><li><strong>see</strong>: <em>supplement</em>
+.defineMethod</li></ul>
+</td>
+<td class="code">
+<pre><code><span class="keyword">var</span> <span class="variable">defineAlias</span> = <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">alias</span>, <span class="variable">original</span>) {
+    <span class="this">this</span>.<span class="variable">defineMethod</span>(<span class="variable">obj</span>, <span class="variable">alias</span>, <span class="variable">obj</span>[<span class="variable">original</span>])
+  }</code></pre>
+</td>
+</tr>
+<tr class="code">
+<td class="docs">
+<h2>supplement.defineMethod</h2>
+
+<p>A utility function for supplementing any object with new methods.  It wraps the ES5 Object.defineProperty
+method and uses that wherever possible, falling back to plain property assignment in older browsers.</p>
+
+<p>The function will have <code>this</code> set to the object passed as the first parameter.</p>
+
+<h2></h2>
+
+<ul><li><p><strong>param</strong>: <em>Object</em>  the object on which to define the method</p></li><li><p><strong>param</strong>: <em>String</em>  the name of the new method</p></li><li><p><strong>param</strong>: <em>Function</em>  the function that makes up the body of the method for the object.</p></li></ul>
+
+<h3>Example</h3>
+
+<pre><code>supplement.defineMethod(Array, 'first', function () {
+  return this[0]
+})</code></pre>
+
+<p>   </p>
+</td>
+<td class="code">
+<pre><code><span class="keyword">var</span> <span class="variable">defineMethod</span> = <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>) {
+    <span class="keyword">if</span> (<span class="variable">obj</span>[<span class="variable">name</span>]) <span class="keyword">return</span> <span class="variable">callClashCallbacks</span>(<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>)
+
+    <span class="comment">// if defineProperties is supported then a working version</span>
+    <span class="comment">// of defineProperty will be available.  Work around for IE8's</span>
+    <span class="comment">// broken implementation of defineProperty.</span>
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="class">Object</span>.<span class="variable">defineProperties</span> == <span class="string">'function'</span>) {
+      <span class="class">Object</span>.<span class="variable">defineProperty</span>(<span class="variable">obj</span>, <span class="variable">name</span>, {
+        <span class="variable">value</span>: <span class="variable">fn</span>,
+        <span class="variable">enumerable</span>: <span class="variable">false</span>,
+        <span class="variable">configurable</span>: <span class="variable">false</span>
+      })
+    } <span class="keyword">else</span> {
+      <span class="variable">obj</span>[<span class="variable">name</span>] = <span class="variable">fn</span>
+    };
+  }</code></pre>
 </td>
 </tr><tr class="filename"><td><h2 id="src/function.js"><a href="#">function</a></h2></td><td>src/function.js</td></tr><tr class="code">
 <td class="docs">
@@ -782,81 +857,6 @@ Object.typeOF(1)  // returns 'number'</code></pre>
   })
 })
 </code></pre>
-</td>
-</tr><tr class="filename"><td><h2 id="src/supplement.js"><a href="#">supplement</a></h2></td><td>src/supplement.js</td></tr><tr class="code">
-<td class="docs">
-<h2>supplement.onClash</h2>
-
-<p>A callback that will be called when supplement attempts to define a method that would cause a clash.
-The callback function will be passed the object that was trying to be modified by supplement, the
-property name that was trying to be set and the value that the property was being set to.</p>
-
-<p>Use this to decide whether a clash is fatal for your application and throw a big error if so.</p>
-
-<h2></h2>
-
-<ul><li><p><strong>params</strong>: <em>Function</em>  the callback function</p></li></ul>
-</td>
-<td class="code">
-<pre><code><span class="keyword">var</span> <span class="variable">onClash</span> = <span class="keyword">function</span> (<span class="variable">fn</span>) {
-    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable">fn</span> !== &<span class="variable">quot</span>;<span class="keyword">function</span>&<span class="variable">quot</span>;) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="class">TypeError</span> ()
-    <span class="variable">clashCallbacks</span>.<span class="variable">push</span>(<span class="variable">fn</span>)
-  }</code></pre>
-</td>
-</tr>
-<tr class="code">
-<td class="docs">
-<h2>supplement.defineAlias</h2>
-
-<p>A utility function for providing an alias to an objects method.</p>
-
-<ul><li><strong>see</strong>: <em>supplement</em>
-.defineMethod</li></ul>
-</td>
-<td class="code">
-<pre><code><span class="keyword">var</span> <span class="variable">defineAlias</span> = <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">alias</span>, <span class="variable">original</span>) {
-    <span class="this">this</span>.<span class="variable">defineMethod</span>(<span class="variable">obj</span>, <span class="variable">alias</span>, <span class="variable">obj</span>[<span class="variable">original</span>])
-  }</code></pre>
-</td>
-</tr>
-<tr class="code">
-<td class="docs">
-<h2>supplement.defineMethod</h2>
-
-<p>A utility function for supplementing any object with new methods.  It wraps the ES5 Object.defineProperty
-method and uses that wherever possible, falling back to plain property assignment in older browsers.</p>
-
-<p>The function will have <code>this</code> set to the object passed as the first parameter.</p>
-
-<h2></h2>
-
-<ul><li><p><strong>param</strong>: <em>Object</em>  the object on which to define the method</p></li><li><p><strong>param</strong>: <em>String</em>  the name of the new method</p></li><li><p><strong>param</strong>: <em>Function</em>  the function that makes up the body of the method for the object.</p></li></ul>
-
-<h3>Example</h3>
-
-<pre><code>supplement.defineMethod(Array, 'first', function () {
-  return this[0]
-})</code></pre>
-
-<p>   </p>
-</td>
-<td class="code">
-<pre><code><span class="keyword">var</span> <span class="variable">defineMethod</span> = <span class="keyword">function</span> (<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>) {
-    <span class="keyword">if</span> (<span class="variable">obj</span>[<span class="variable">name</span>]) <span class="keyword">return</span> <span class="variable">callClashCallbacks</span>(<span class="variable">obj</span>, <span class="variable">name</span>, <span class="variable">fn</span>)
-
-    <span class="comment">// if defineProperties is supported then a working version</span>
-    <span class="comment">// of defineProperty will be available.  Work around for IE8's</span>
-    <span class="comment">// broken implementation of defineProperty.</span>
-    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="class">Object</span>.<span class="variable">defineProperties</span> == <span class="string">'function'</span>) {
-      <span class="class">Object</span>.<span class="variable">defineProperty</span>(<span class="variable">obj</span>, <span class="variable">name</span>, {
-        <span class="variable">value</span>: <span class="variable">fn</span>,
-        <span class="variable">enumerable</span>: <span class="variable">false</span>,
-        <span class="variable">configurable</span>: <span class="variable">false</span>
-      })
-    } <span class="keyword">else</span> {
-      <span class="variable">obj</span>[<span class="variable">name</span>] = <span class="variable">fn</span>
-    };
-  }</code></pre>
 </td>
 </tr>	</body>
 </html></tbody></table>
