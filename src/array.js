@@ -185,8 +185,8 @@ supplement.defineMethod(Array.prototype, 'group', function (fn, context) { "use 
 
 /**
  * ## Array.prototype.reject
- * Returns a new array containing items from this array for which the function returns a truthy value.
- * The function passed 3 arguments, the current element from the array, the index of this item in
+ * Returns a new array containing items from this array for which the function returns false.
+ * The function is passed 3 arguments, the current element from the array, the index of this item in
  * the array and the whole array.  The context of the function can be set by passing an optional second
  * parameter.
  *
