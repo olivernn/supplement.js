@@ -253,3 +253,109 @@ supplement.defineMethod(Array.prototype, 'pluck', function (n) { "use strict";
     return value
   })
 })
+
+/**
+ * ## Array.prototype.contains
+ * Indicates whether the array contains a given thing.
+ * Equivalent to but more readable than !!~this.indexOf(thing);
+ *
+ * @param {thing} the thing to look for in the array
+ * @returns {Boolean} true IFF the array contains the thing, false otherwise
+ */
+supplement.defineMethod(Array.prototype, 'contains', function(thing) {
+  return !!~this.indexOf(thing);
+})
+
+/**
+ * ## Array.prototype.copy
+ * Returns a shallow copy of the array.
+ *
+ * @returns {Array} an array containing the properties and/or result of method calls
+ */
+supplement.defineMethod(Array.prototype, 'copy', function () {
+  return Array.toArray(this);
+});
+
+/**
+ * ## Array.prototype.remove
+ * Deletes the first occurence of the thing from the array and compacts the array
+ *
+ * Effectively a NOOP if the array does not contain the thing
+ *
+ * @param {thing} the thing to remove
+ * @returns {Array} an array containing all elements except the first occurence of thing
+ */
+supplement.defineMethod(Array.prototype, 'remove', function (thing) {
+  delete this[this.indexOf(thing)];
+  return this.compact();
+});
+
+/**
+ * ## Array.prototype.removeEvery
+ * Deletes all occurences of the thing from the array and compacts the array
+ *
+ * Note this function is idempotent ONLY over value comparison of the return value
+ *
+ * @param {thing} the thing to remove
+ * @returns {Array} an array containing all elements except thing
+ */
+supplement.defineMethod(Array.prototype, 'removeEvery', function (thing) {
+
+  for(var i = 0; i < this.length; i++) {
+    if (this[i] === thing) {
+      delete this[i];
+    }
+  }
+
+  return this.compact();
+});
+
+/**
+ * ## Array.prototype.isEmpty
+ * Indicates whether the array is zero length
+ *
+ * @returns {Boolean} true IFF the array has no elements, false otherwise
+ */
+supplement.defineMethod(Array.prototype, 'isEmpty', function () {
+  return this.length === 0;
+});
+
+/**
+ * ## Array.prototype.first
+ *
+ * @returns {Object} The first element of the array
+ */
+supplement.defineMethod(Array.prototype, 'first', function (obj) {
+  return this[0];
+});
+
+/**
+ * ## Array.prototype.first
+ *
+ * @returns {Object} The last element of the array
+ */
+supplement.defineMethod(Array.prototype, 'last', function (obj) {
+  return this[this.length - 1];
+});
+
+/**
+ * ## Array.prototype.count
+ * Returns the number of items which match the given predicate.
+ * If no predicate is given, the length of the array is returned.
+ *
+ * @param {predicate} the function which must return truthy to indicate a match
+ * @returns {Number} a positive integer represdenting the match count
+ */
+supplement.defineMethod(Array.prototype, 'count', function (predicate) {
+  if (!predicate) return this.length;
+  
+  var count = 0;
+  
+  this.forEach(function (e) {
+    if (predicate(e)) {
+      count++;
+    }
+  })
+  
+  return count;
+})
