@@ -58,3 +58,8 @@ test("pad throws a range error if a negative number is passed to the function", 
     (1).pad(-1)
   }, RangeError, "should raise a range error if a non number is passed to the pad function")
 })
+
+test('toDps returns the number rounded using half rounding', function () {
+  equal((1.23455).toDps(4), 1.2346)
+  equal((1.23).toDps(1), 1.2)
+})

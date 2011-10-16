@@ -283,11 +283,11 @@ test("pluck throws TypeError if prop name is missing or not a string", function 
 })
 
 test('contains returns true if the array contains an object', function () {
-  equal([1,'sugar', 2].contains('sugar'), true, 'the array does contain "sugar"')
+  ok([1,'sugar', 2].contains('sugar'), 'the array does contain "sugar"')
 })
 
 test('contains returns true if the array contains an object', function () {
-  equal([1,'sugar', 2].contains('artificial sweeteners'), false, 'the array does not contain "artificial sweeteners"')
+  ok(![1,'sugar', 2].contains('artificial sweeteners'), 'the array does not contain "artificial sweeteners"')
 })
 
 test("copy returns a new array", function () {
@@ -301,7 +301,7 @@ test("copy returns an array with all of the elements of the original", function 
   var copy = array.copy()
 
   array.forEach(function (e) {
-    equal(copy.contains(e), true, 'copy did not contain ' + e)
+    ok(copy.contains(e), 'copy did not contain ' + e)
   })
 })
 
@@ -334,11 +334,11 @@ test("removeEvery returns a compacted copy of the array", function () {
 })
 
 test("isEmpty returns true for an empty array", function () {
-  equal([].isEmpty(), true)
+  ok([].isEmpty())
 })
 
 test("isEmpty returns false for a non-empty array", function () {
-  equal([0].isEmpty(), false)
+  ok(![0].isEmpty())
 })
 
 test("first returns the first element of the array", function () {

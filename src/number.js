@@ -68,3 +68,14 @@ supplement.defineMethod(Number.prototype, 'pad', function (zeroes) { "use strict
   }
   return out
 })
+
+/**
+ * ## Number.prototype.toDps
+ * Round a number of fixed decimal places
+ *
+ * @params {Number} the number of decimal places
+ * @returns {Number} the number to the specified number of decimal places using half rounding
+ */
+supplement.defineMethod(Number.prototype, 'toDps', function (n) {
+  return parseFloat(this.toFixed(n));
+});
