@@ -29,7 +29,7 @@ test('strip returns the string without any leading or trailing whitespace', func
 })
 
 test('enquote encloses the string with the specified string', function () {
-  equal("ur".enquote('ch'), 'church')
+  equal("ur".quote('ch'), 'church')
 })
 
 test('quote encloses the string with the " (quotation mark) by default', function () {
@@ -41,7 +41,7 @@ test('toFloat parses a valid float', function () {
 })
 
 test('toFloat returns NaN if the string does not represent a valid float', function () {
-  equal("one".toFloat(), NaN)
+  ok(!"one".toFloat()); // can't test equality to NaN
 })
 
 test('toInteger parses a valid integer', function () {
@@ -49,5 +49,5 @@ test('toInteger parses a valid integer', function () {
 })
 
 test('toInteger returns NaN if the string does not represent a valid integer', function () {
-  equal("one".toInteger(), NaN)
+  ok(!"one".toInteger()); // can't test equality to NaN
 })

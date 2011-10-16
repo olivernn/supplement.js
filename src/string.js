@@ -48,7 +48,7 @@ supplement.defineMethod(String.prototype, 'strip', function () {
  * @returns {String} A new string enclosed by the specified string
  */
 supplement.defineMethod(String.prototype, 'quote', function (enclosingString) {
-  var q =  quoteCharacter || '"'
+  var enclosingString =  enclosingString || '"'
   return enclosingString + this + enclosingString;
 });
 
@@ -59,6 +59,7 @@ supplement.defineMethod(String.prototype, 'quote', function (enclosingString) {
  * @returns {Number} A Float parsed from the string
  */
 supplement.defineMethod(String.prototype, 'toFloat', function () {
+  if (!this.match(/^\d+(\.\d+)?$/)) return NaN;
   return parseFloat(this);
 });
 
@@ -69,6 +70,7 @@ supplement.defineMethod(String.prototype, 'toFloat', function () {
  * @returns {Number} An Integer parsed from the string
  */
 supplement.defineMethod(String.prototype, 'toInteger', function () {
+  if (!this.match(/^\d+$/)) return NaN;
   return parseInt(this);
 });
 
