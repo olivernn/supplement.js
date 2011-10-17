@@ -32,27 +32,6 @@ supplement.defineMethod(String.prototype, 'contains', function(substring) {
 });
 
 /**
- * ## String.prototype.strip
- * Removes any leading or trailing white space
- *
- * @returns {String} A new string without any leading or trailing whitespace
- */
-supplement.defineMethod(String.prototype, 'strip', function () {
-  return this.replace(/^\s+|\s+$/g, '');
-});
-
-/**
- * ## String.prototype.quote
- * encloses the string with the specified string, or " if no enclosing string is given
- *
- * @returns {String} A new string enclosed by the specified string
- */
-supplement.defineMethod(String.prototype, 'quote', function (enclosingString) {
-  var enclosingString =  enclosingString || '"'
-  return enclosingString + this + enclosingString;
-});
-
-/**
  * ## String.prototype.toFloat
  * Converts the number to a float
  *

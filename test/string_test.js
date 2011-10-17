@@ -24,18 +24,6 @@ test('contains returns false for when the string does not contain the candidate 
   ok(!"helloWorld".contains("gluten"))
 })
 
-test('strip returns the string without any leading or trailing whitespace', function () {
-  equal('   hello Shirley     '.strip(), 'hello Shirley')
-})
-
-test('enquote encloses the string with the specified string', function () {
-  equal("ur".quote('ch'), 'church')
-})
-
-test('quote encloses the string with the " (quotation mark) by default', function () {
-  equal("expense claims".quote(), '"expense claims"')
-})
-
 test('toFloat parses a valid float', function () {
   equal("1.234".toFloat(), 1.234)
 })
