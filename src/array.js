@@ -286,28 +286,9 @@ supplement.defineMethod(Array.prototype, 'copy', function () {
  * @returns {Array} an array containing all elements except the first occurence of thing
  */
 supplement.defineMethod(Array.prototype, 'remove', function (thing) {
-  delete this[this.indexOf(thing)];
-  return this.compact();
-});
-
-/**
- * ## Array.prototype.removeEvery
- * Deletes all occurences of the thing from the array and compacts the array
- *
- * Note this function is idempotent ONLY over value comparison of the return value
- *
- * @param {thing} the thing to remove
- * @returns {Array} an array containing all elements except thing
- */
-supplement.defineMethod(Array.prototype, 'removeEvery', function (thing) {
-
-  for(var i = 0; i < this.length; i++) {
-    if (this[i] === thing) {
-      delete this[i];
-    }
-  }
-
-  return this.compact();
+  return this.reject(function(e) {
+    return e == thing;
+  });
 });
 
 /**

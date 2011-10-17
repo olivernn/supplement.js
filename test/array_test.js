@@ -305,32 +305,18 @@ test("copy returns an array with all of the elements of the original", function 
   })
 })
 
-test("remove returns an array without the first (and only the first) occurence of the specified element", function () {
+test("remove returns a new array", function () {
 
   var array = [1,2,3,4,5,3]
-  deepEqual([1,2,4,5,3], array.remove(3), 'all other elements should remain')
+  var newArray = array.remove(3)
+
+  notStrictEqual(array, newArray, 'should be a different object')
 })
 
-test("remove returns a compacted copy of the array", function () {
+test("remove returns an array without the specified element", function () {
 
   var array = [1,2,3,4,5,3]
-  var compactedArray = array.remove(3)
-
-  notStrictEqual(array, compactedArray, 'should be a different object')
-})
-
-test("removeEvery returns an array without the specified element", function () {
-
-  var array = [1,2,3,4,5,3]
-  deepEqual([1,2,4,5], array.removeEvery(3), 'all other elements should remain')
-})
-
-test("removeEvery returns a compacted copy of the array", function () {
-
-  var array = [1,2,3,4,5,3]
-  var compactedArray = array.remove(3)
-
-  notStrictEqual(array, compactedArray, 'should be a different object')
+  deepEqual([1,2,4,5], array.remove(3), 'all other elements should remain')
 })
 
 test("isEmpty returns true for an empty array", function () {
