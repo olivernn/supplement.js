@@ -281,3 +281,75 @@ test("pluck throws TypeError if prop name is missing or not a string", function 
     [].pluck(1)
   }, TypeError, "Property name argument must be a string")
 })
+
+test('contains returns true if the array contains an object', function () {
+  ok([1,'sugar', 2].contains('sugar'), 'the array does contain "sugar"')
+})
+
+test('contains returns true if the array contains an object', function () {
+  ok(![1,'sugar', 2].contains('artificial sweeteners'), 'the array does not contain "artificial sweeteners"')
+})
+
+test("copy returns a new array", function () {
+  var array = [1,2,3]
+  notEqual(array, array.copy());
+})
+
+test("copy returns an array with all of the elements of the original", function () {
+
+  var array = [1,2,3]
+  var copy = array.copy()
+
+  array.forEach(function (e) {
+    ok(copy.contains(e), 'copy did not contain ' + e)
+  })
+})
+
+test("remove returns a new array", function () {
+
+  var array = [1,2,3,4,5,3]
+  var newArray = array.remove(3)
+
+  notStrictEqual(array, newArray, 'should be a different object')
+})
+
+test("remove returns an array without the specified element", function () {
+
+  var array = [1,2,3,4,5,3]
+  deepEqual([1,2,4,5], array.remove(3), 'all other elements should remain')
+})
+
+test("isEmpty returns true for an empty array", function () {
+  ok([].isEmpty())
+})
+
+test("isEmpty returns false for a non-empty array", function () {
+  ok(![0].isEmpty())
+})
+
+test("first returns the first element of the array", function () {
+  equal([1,2,3].first(), 1)
+})
+
+test("first returns undefined on an empty array", function () {
+  equal(typeof [].first(), 'undefined')
+})
+
+test("last returns the last element of the array", function () {
+  equal([1,2,3].last(), 3)
+})
+
+test("last returns undefined on an empty array", function () {
+  equal(typeof [].last(), 'undefined')
+})
+
+test('calling count without a predicate returns the array length', function () {
+  equal([1,2,3].count(), 3)
+})
+
+test('count returns the number of items which match the given predicate which returns truthy', function () {
+  // match odd numbers
+  equal([1,2,3,4,5,6,7,8,9,0].count(function (e) {
+    return e % 2;
+  }), 5)
+})

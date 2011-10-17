@@ -33,6 +33,7 @@ class Bundler
           function.js
           number.js
           object.js
+          string.js
         )
       end
 
