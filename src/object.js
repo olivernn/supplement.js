@@ -32,7 +32,7 @@ supplement.defineMethod(Object, 'values', function (obj) { "use strict";
  *     // returns {} which is equal to a.foo.bar.baz
  */
 supplement.defineMethod(Object, 'provide', function (obj) { "use strict";
-  if (obj !== Object(obj)) throw new TypeError('Object.provide called on non-object');
+  if (obj !== Object(obj)) throw new TypeError('Object.provide was passed a non-object');
   var properties = Array.prototype.slice.call(arguments, 1)
   var node = obj
   properties.forEach(function (prop) {
@@ -84,3 +84,29 @@ supplement.defineMethod(Object, 'typeOf', function (obj) { "use strict";
     return Object.typeOf(obj) == type.toLowerCase()
   })
 })
+
+/**
+ * ## Object.extend
+ * Extends an object with the given properties (given one or more objects)
+ *
+ * @param {Object} the destination object to copy properties onto
+ * @params {Object} any number of objects to copy properties from
+ * @returns {Object} the extended destination object
+ *
+ * ### Example
+ *     var a = {}
+ *     Object.extend(a, {one: 1}, {two: 2, three: 3})   // returns a
+ *     a  // is now {one: 1, two: 2, three: 3}
+ */
+supplement.defineMethod(Object, 'extend', function (destination) { "use strict";
+  if (destination !== Object(destination)) throw new TypeError('Object.extend was passed a non-object');
+  var sources = Array.prototype.slice.call(arguments, 1)
+  sources.forEach(function (source) {
+    for (var property in source) {
+      if (source.hasOwnProperty(property)) {
+        destination[property] = source[property]
+      }
+    }
+  })
+  return destination
+});
