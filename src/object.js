@@ -32,7 +32,7 @@ supplement.defineMethod(Object, 'values', function (obj) { "use strict";
  *     // returns {} which is equal to a.foo.bar.baz
  */
 supplement.defineMethod(Object, 'provide', function (obj) { "use strict";
-  if (obj !== Object(obj)) throw new TypeError('Object.provide called on non-object');
+  if (obj !== Object(obj)) throw new TypeError('Object.provide was passed a non-object');
   var properties = Array.prototype.slice.call(arguments, 1)
   var node = obj
   properties.forEach(function (prop) {
