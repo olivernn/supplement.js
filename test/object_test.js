@@ -157,3 +157,36 @@ test("isDate returns true if the object is a date", function () {
   ok(Object.isDate(new Date ()))
   returnsFalseForEachTypeExcept("date")
 })
+
+test("extend extends an object", function () {
+  var a = {}
+  ok(Object.extend(a, {hello: 'there'}))
+  same(a, {hello: 'there'})
+})
+
+test("extend overrides existing properties", function () {
+  var a = {hello: 'guys'}
+  ok(Object.extend(a, {hello: 'there'}))
+  same(a, {hello: 'there'})
+})
+
+test("extend returns the extended object", function () {
+  var a = {}
+  var b = Object.extend(a, {hello: 'there'})
+  equal(b, a)
+})
+
+test("extend allows extending with multiple objects", function () {
+  var a = {}
+  Object.extend(a, {hello: 'there'}, {wassup: 'dog'})
+  same(a, {hello: 'there', wassup: 'dog'})
+})
+
+test("extend does not copy over properties from the prototype", function () {
+  var a = {}
+  var ctor = function(){}
+  ctor.prototype.slimey = 'slug'
+  var b = new ctor()
+  Object.extend(a, b)
+  same(a, {})
+})
