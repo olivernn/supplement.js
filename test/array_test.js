@@ -281,3 +281,13 @@ test("pluck throws TypeError if prop name is missing or not a string", function 
     [].pluck(1)
   }, TypeError, "Property name argument must be a string")
 })
+
+test("last returns undefined with an empty array", function() {
+  var arr = []
+  same(arr.last(), undefined)
+})
+
+test("last returns the last value in the array", function() {
+  var arr = [1, 2, 3]
+  equal(arr.last(), 3)
+})
