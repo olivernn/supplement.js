@@ -253,3 +253,18 @@ supplement.defineMethod(Array.prototype, 'pluck', function (n) { "use strict";
     return value
   })
 })
+
+/**
+ * ## Array.prototype.last
+ * Returns the last element from an array.  If the array is empty undefined is returned.
+ * The original array is left un-mutated.
+ *
+ * @returns {Anything} the last element from the array or undefined.
+ *
+ * ### Example
+ *     var a = [1,2,3]
+ *     a.last() // returns 3
+ */
+supplement.defineMethod(Array.prototype, 'last', function() { "use strict";
+  return this[this.length - 1]
+})
